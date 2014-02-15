@@ -10,5 +10,6 @@ exports.channel = channel;
 exports.server = server;
 exports.port = port;
 exports.nick = nick;
+exports.pass = pass;
 exports.realName = realName;
 exports.botMaster = botMaster;
