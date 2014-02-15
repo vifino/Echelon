@@ -10,7 +10,7 @@ var bot = new irc.Client(config.server, config.nick, {
 	port: config.port,
 	realName: config.realName,
 	userName: config.nick,
-};
+});
 if (!config.pass == "") {
 	bot.say("nickserv", "identify " + config.pass);
 };
