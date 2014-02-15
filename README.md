@@ -25,3 +25,7 @@ If you want to develop a Module, just make a file with the ".js" extension and i
     5. echexecargs
       The array of Arguments when the Module is called: "Echelon execute: (module) (arg1) (arg2) (arg3) ..."
       The "Echelon execute: " part is not casesensitive, the arguments are.
+
+Requirements:
+
+Node.JS and the irc Module.
