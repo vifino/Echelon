@@ -2,9 +2,9 @@ Echelon
 =======
 
 Echelon is a IRC bot in Node.JS. It is Event-driven and expandable via Modules, also written in Node.JS.
-They can permanently loaded and can add events.
+They can be permanently loaded and they can add events.
 
-If you want to develop a Module, just make a file with the ".js" extension and implement at least two Functions:
+If you want to develop your own Module, just make a file with the ".js" extension and implement at least two Functions:
 
 1. start()
   The "start" function should be your initialisation of things you need, because when the module is not used, it shouldn't
@@ -28,4 +28,4 @@ If you want to develop a Module, just make a file with the ".js" extension and i
 
 Requirements:
 
-Node.JS and the irc Module.
+Node.JS and the IRC Module.
