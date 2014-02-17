@@ -20,24 +20,26 @@ if (!fs.existsSync("./modules")) {
 	fs.mkdirSync("./modules");
 }
 // Load Additional Modules.
-var modules = [];
-var modulestotal = 0;
-console.log("Searching and loading Modules.");
-var files = fs.readdirSync("./modules");
-var modulenames = [];
-for(var filecount in files){
+function reloadModules() {
+	var modules = [];
+	var modulestotal = 0;
+	console.log("Searching and loading Modules.");
+	var files = fs.readdirSync("./modules");
+	var modulenames = [];
+	for(var filecount in files){
 	if (!files.hasOwnProperty(filecount)) continue;
-	modulestotal = modulestotal + 1;
-	var currentfile = files[filecount]
-	console.log(currentfile);
-	var currentfilewoext = currentfile.slice(0,-3);
-	console.log(currentfilewoext);
-	modules[currentfilewoext] = require("./modules/" + files[filecount]);
-	modulenames.push(currentfilewoext);
-	modulestarted[currentfilewoext] = false;
-	console.log("Loaded ", currentfilewoext);
+		modulestotal = modulestotal + 1;
+		var currentfile = files[filecount];
+		var currentfilewoext = currentfile.slice(0,-3);
+		modules[currentfilewoext] = require("./modules/" + files[filecount]);
+		modulenames.push(currentfilewoext);
+		modulestarted[currentfilewoext] = false;
+		console.log("Loaded ", currentfilewoext);
+	};
+	console.log("Finished Loading Modules.");
 };
-console.log("Finished Loading Modules.")
+
+reloadModules()
 // Finished Loading of modules.
 
 // Listen for joins
@@ -58,9 +60,10 @@ bot.addListener("message", function(from, to, text, message) {
 	  {
 		console.log("User " + from + " Requested Time.");
 		var date = new Date();
-	var current_hour = date.getHours();
-	var current_min = date.getMinutes();
-	var current_sec = date.getSeconds();
+		var current_hour = date.getHours();
+		var current_min = date.getMinutes();
+		var current_sec = date.getSeconds();
+
 		bot.say(config.channel[0],"Current Time: " + current_hour + ":" + current_min + ":" + current_sec)
 	  }
 	else if (text.toLowerCase() == config.nick.toLowerCase() + " logout")
@@ -83,6 +86,17 @@ bot.addListener("message", function(from, to, text, message) {
 		if (echexecargs[0] == "modules") {
 			bot.say(config.channel[0], "Currently Available Modules:");
 			bot.say(config.channel[0], modulenames.toString());
+		}
+		else if (echexecargs[0].toLowerCase() == "reload" ) {
+			if (from == config.botMaster) {
+				bot.say(config.channel[0], "Reloading Modules...");
+				reloadModules();
+				bot.say(config.channel[0], "Complete!");
+			}
+			else {
+				console.log("Request denied.");
+				bot.say(config.channel[0], "Request denied.");
+			};
 		}
 		else {
 			var modulevalid = 0;
