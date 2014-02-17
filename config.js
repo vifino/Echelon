@@ -2,9 +2,9 @@
 var channel = ["#ccbots"];
 var server = "irc.esper.net";
 var port = 5555;
-var nick = botMaster + "-o-Bot";
+var nick = "Test-o-Bot";
 var pass = "";
-var realName = botMaster + "'s Scripted Bot";
+var realName = "vifino's Scripted Bot";
 var botMaster = "vifino";
 exports.channel = channel;
 exports.server = server;
