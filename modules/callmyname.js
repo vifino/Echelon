@@ -12,7 +12,7 @@ var Replylist = [
   "What do you need?"
 ];
 
-function start(from,to,bot,config,echexecargs) {
+function init(bot,config) {
   console.log("Adding listener for blank.js");
   bot.addListener("message", function(from, to, text, message) {
     if (text.toLowerCase().replace(",","").replace(".","").replace("!","") == config.nick.toLowerCase())
@@ -22,6 +22,18 @@ function start(from,to,bot,config,echexecargs) {
      }
   });
 }
+
+function start(from,to,bot,config,echexecargs) {
+  console.log("callmyname.js started manually");
+  init(bot,config);
+}
+
+function autorun(bot,config)
+{
+  console.log("callmyname.js started automatically");
+  init(bot,config);
+}
+
 function execute() {
   // Nothing
 }
