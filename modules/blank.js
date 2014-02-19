@@ -15,7 +15,7 @@ var Replylist = [
 function start(from,to,bot,config,echexecargs) {
   console.log("Adding listener for blank.js");
   bot.addListener("message", function(from, to, text, message) {
-    if (text.toLowerCase() == config.nick.toLowerCase() + " help")
+    if (text.toLowerCase() == config.nick.toLowerCase())
      {
        var randomNumber = Math.floor(Math.random()*textArray.length);
        bot.say(config.channel[0], Replylist[randomNumber]);
