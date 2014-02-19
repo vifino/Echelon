@@ -6,7 +6,10 @@ function start(from,to,bot,config,echexecargs) {
   bot.addListener("message", function(from, to, text, message) {
     if(text.toLowerCase().indexOf(config.nick.toLowerCase()+" say ") == 0)
     {
-      bot.say(config.channel[0], text.toLowerCase().replace(config.nick.toLowerCase()+" say ",""));
+      var regEx = new RegExp(config.nick+" say ", "ig");
+      var result = text.replace(regEx, "");
+      
+      bot.say(config.channel[0], text.replace(regEx, replaceMask));
     };
   });
 }
