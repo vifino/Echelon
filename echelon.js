@@ -37,7 +37,6 @@ if (!files.hasOwnProperty(filecount)) continue;
 	console.log("Loaded ", currentfilewoext);
 };	
 console.log("Finished Loading Modules.");
-return modules, modulestotal, modulenames, modulesstarted;
 // Finished Loading of modules.
 
 // Listen for joins
