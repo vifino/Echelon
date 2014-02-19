@@ -9,10 +9,10 @@ function start(from,to,bot,config,echexecargs) {
     if (text.toLowerCase() == config.nick.toLowerCase()+ " +cookie")
     {
       cookies += 1;
-    } elseif (text.toLowerCase() == config.nick.toLowerCase()+ " -cookie")
-      cookies -= 1;
+    } 
+    else if (text.toLowerCase() == config.nick.toLowerCase()+ " -cookie")
     {
-    
+      cookies -= 1;
     } 
     else if (text.toLowerCase() == config.nick.toLowerCase()+ " cookies")
     {
