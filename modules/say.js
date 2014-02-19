@@ -5,9 +5,13 @@ function start(from,to,bot,config,echexecargs) {
   console.log("Adding listener for say");
   bot.addListener("message", function(from, to, text, message) {
     var nick = config.nick;
-    if(text.toLowerCase().substring(0, nick.lenght + 5) == config.nick.toLowerCase() + " say ")
-    {
-      bot.say(config.channel[0], text.substring(nick.lenght + 6));
+    if(text.toLowerCase().indexOf(config.nick.toLowerCase()+" say ") == 0)
+      {
+        var regEx = new RegExp(config.nick+" say ", "ig");
+        var result = text.replace(regEx, "");
+       
+        bot.say(config.channel[0], text.replace(regEx, replaceMask));
+        bot.say(config.channel[0], text.replace(regEx, ""));
     };
   });
 }
