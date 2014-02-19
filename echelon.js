@@ -34,7 +34,7 @@ if (!files.hasOwnProperty(filecount)) continue;
 	modules[currentfilewoext] = require("./modules/" + files[filecount]);
 	modulenames.push(currentfilewoext);
 	if (modules[currentfilewoext].autoload) {
-		modules[currentfilewoext].autoload(config);
+		modules[currentfilewoext].autoload(bot, config);
 		modulestarted[currentfilewoext] = true;
 	}
 	else {
