@@ -10,7 +10,6 @@ function start(from,to,bot,config,echexecargs) {
         var regEx = new RegExp(config.nick+" say ", "ig");
         var result = text.replace(regEx, "");
        
-        bot.say(config.channel[0], text.replace(regEx, replaceMask));
         bot.say(config.channel[0], text.replace(regEx, ""));
     };
   });
