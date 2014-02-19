@@ -26,7 +26,7 @@ If you want to develop your own Module, just make a file with the ".js" extensio
       The array of Arguments when the Module is called: "Echelon execute: (module) (arg1) (arg2) (arg3) ..."
       The "Echelon execute " part is not casesensitive, the arguments are.
 
-3. ( Optional ) autorun(config)
+3. ( Optional ) autorun(bot, config)
   This function is for modules that want to auto-execute stuff. It has 2 Arguments:
   1. bot
   2. config
