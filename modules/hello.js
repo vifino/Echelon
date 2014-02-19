@@ -1,3 +1,7 @@
+//hello command
+//Usage: Hello [nick]
+//Hello!
+
 function start(from,to,bot,config,echexecargs) {
   console.log("Adding listener for SayHi")
   bot.addListener("message", function(from, to, text, message) {
