@@ -13,39 +13,40 @@ var bot = new irc.Client(config.server, config.nick, {
 });
 if (!config.pass == "") {
 	bot.say("nickserv", "identify " + config.pass);
-};
+}
 var modulestarted = [];
 // Some First-Run Configuration
 if (!fs.existsSync("./modules")) {
 	fs.mkdirSync("./modules");
 }
 // Load Additional Modules.
-function reloadModules() {
-	var modules = [];
-	var modulestotal = 0;
-	console.log("Searching and loading Modules.");
-	var files = fs.readdirSync("./modules");
-	var modulenames = [];
-	for(var filecount in files){
-	if (!files.hasOwnProperty(filecount)) continue;
-		modulestotal = modulestotal + 1;
-		var currentfile = files[filecount];
-		var currentfilewoext = currentfile.slice(0,-3);
-		modules[currentfilewoext] = require("./modules/" + files[filecount]);
-		modulenames.push(currentfilewoext);
-		modulestarted[currentfilewoext] = false;
-		console.log("Loaded ", currentfilewoext);
-	};
-	console.log("Finished Loading Modules.");
-};
 
-reloadModules()
+var modules = [];
+var modulestotal = 0;
+console.log("Searching and loading Modules.");
+var files = fs.readdirSync("./modules");
+var modulenames = [];
+for(var filecount in files){
+if (!files.hasOwnProperty(filecount)) continue;
+	modulestotal = modulestotal + 1;
+	var currentfile = files[filecount];
+	var currentfilewoext = currentfile.slice(0,-3);
+	modules[currentfilewoext] = require("./modules/" + files[filecount]);
+	modulenames.push(currentfilewoext);
+	modulestarted[currentfilewoext] = false;
+	console.log("Loaded ", currentfilewoext);
+};	
+console.log("Finished Loading Modules.");
+return modules, modulestotal, modulenames, modulesstarted;
 // Finished Loading of modules.
 
 // Listen for joins
-bot.addListener("join", function(channel, who) {
+bot.addListener("join", basicJoin);
+bot.addListener("message", basicMessage);
+
+function basicJoin(channel, who) {
 	// Welcome them in if he is not my master!
-	if (who == config.botMaster)
+if (who == config.botMaster)
 	  {
 	bot.say(config.channel[0], "Welcome, Master " + who + ".");
 	  }
@@ -53,9 +54,9 @@ bot.addListener("join", function(channel, who) {
 	  {
 	console.log("Main Programm Loaded.");
 	  }
-});
+};
 
-bot.addListener("message", function(from, to, text, message) {
+function basicMessage(from, to, text, message) {
 	if (text.toLowerCase() == config.nick.toLowerCase() + " time")
 	  {
 		console.log("User " + from + " Requested Time.");
@@ -64,7 +65,7 @@ bot.addListener("message", function(from, to, text, message) {
 		var current_min = date.getMinutes();
 		var current_sec = date.getSeconds();
 
-		bot.say(config.channel[0],"Current Time: " + current_hour + ":" + current_min + ":" + current_sec)
+		bot.say(config.channel[0],"Current Time: " + current_hour + ":" + current_min + ":" + current_sec);
 	  }
 	else if (text.toLowerCase() == config.nick.toLowerCase() + " logout")
 	  {
@@ -79,24 +80,14 @@ bot.addListener("message", function(from, to, text, message) {
 		bot.say(config.channel[0], "Request denied.");
 		};
 	  }
-	else if (text.substring(0,10 + config.nick.length).toLowerCase() == config.nick.toLowerCase() + " execute: ") {
-		var echexec = text.substring(10 + config.nick.length).toLowerCase();
+	else if (text.substring(0,9 + config.nick.length).toLowerCase() == config.nick.toLowerCase() + " execute ")
+	{
+		var echexec = text.substring(9 + config.nick.length).toLowerCase();
 		var echexecargs = echexec.split(" ");
 		console.log(from +" tried to execute " + echexec);
 		if (echexecargs[0] == "modules") {
 			bot.say(config.channel[0], "Currently Available Modules:");
 			bot.say(config.channel[0], modulenames.toString());
-		}
-		else if (echexecargs[0].toLowerCase() == "reload" ) {
-			if (from == config.botMaster) {
-				bot.say(config.channel[0], "Reloading Modules...");
-				reloadModules();
-				bot.say(config.channel[0], "Complete!");
-			}
-			else {
-				console.log("Request denied.");
-				bot.say(config.channel[0], "Request denied.");
-			};
 		}
 		else {
 			var modulevalid = 0;
@@ -120,4 +111,4 @@ bot.addListener("message", function(from, to, text, message) {
 	else {
 		console.log(from + ": " + text);
 	  };
-});
+}
