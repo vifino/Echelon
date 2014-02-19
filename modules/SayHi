@@ -7,4 +7,3 @@ function start() {
   });
 }
 exports.start = start;
-exports.execute = execute;
