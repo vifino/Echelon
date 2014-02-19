@@ -9,7 +9,7 @@ function start(from,to,bot,config,echexecargs) {
     	  {
       		//Help function
       		console.log("Displaying help");
-      		bot.say(config.channel[0], "Todo - Add info about bot";
+      		bot.say(config.channel[0], "Todo - Add info about bot");
       		if (from == config.botMaster)
       		{
       		  bot.say(config.channel[0], "Commands: time, execute, logout");
