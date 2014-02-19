@@ -83,7 +83,7 @@ function basicMessage(from, to, text, message) {
 	{
 		var echexec = text.substring(9 + config.nick.length); //.toLowerCase();
 		var echexecargs = echexec.split(" ");
-		console.log(from +" tried to execute " + echexec.toLowerCase();
+		console.log(from +" tried to execute " + echexec.toLowerCase());
 		if (echexecargs[0] == "modules") {
 			bot.say(config.channel[0], "Currently Available Modules:");
 			bot.say(config.channel[0], modulenames.toString());
