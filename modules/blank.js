@@ -17,7 +17,7 @@ function start(from,to,bot,config,echexecargs) {
   bot.addListener("message", function(from, to, text, message) {
     if (text.toLowerCase() == config.nick.toLowerCase())
      {
-       var randomNumber = Math.floor(Math.random()*textArray.length);
+       var randomNumber = Math.floor(Math.random()*Replylist.length);
        bot.say(config.channel[0], Replylist[randomNumber]);
      }
   });
