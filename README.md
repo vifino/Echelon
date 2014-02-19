@@ -24,7 +24,7 @@ If you want to develop your own Module, just make a file with the ".js" extensio
       realName (String) and the botMaster (String, The Admin of that Bot.). Most of them are self-explanatory.
     5. echexecargs
       The array of Arguments when the Module is called: "Echelon execute: (module) (arg1) (arg2) (arg3) ..."
-      The "Echelon execute: " part is not casesensitive, the arguments are.
+      The "Echelon execute " part is not casesensitive, the arguments are.
 
 These functions are required, but you dont need to execute anything in them.
 
