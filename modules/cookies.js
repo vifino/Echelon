@@ -3,8 +3,9 @@
 int cookies
 
 function start(from,to,bot,config,echexecargs) {
-  console.log("Adding listener for cookies.js")
+  console.log("I hope you have cookies enabled")
   bot.addListener("message", function(from, to, text, message) {
+    bot.say(config.channel[0], "I hope you have cookies enabled");
     if (text.toLowerCase() == config.nick.toLowerCase()+ " +cookie")
     {
       cookies+=1;
