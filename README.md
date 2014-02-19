@@ -13,7 +13,7 @@ If you want to develop your own Module, just make a file with the ".js" extensio
 2. ( Optional )  execute(from,to,bot,config,echexecargs)
   The "execute" function is your main action. It has five arguments:
     1. from
-      The one who issued the command.
+      - The one who issued the command.
       
     2. to
       - The one who received the message. This should be the Bot's Name if the bot received a private message.
