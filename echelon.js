@@ -81,9 +81,9 @@ function basicMessage(from, to, text, message) {
 	  }
 	else if (text.substring(0,9 + config.nick.length).toLowerCase() == config.nick.toLowerCase() + " execute ")
 	{
-		var echexec = text.substring(9 + config.nick.length).toLowerCase();
+		var echexec = text.substring(9 + config.nick.length); //.toLowerCase();
 		var echexecargs = echexec.split(" ");
-		console.log(from +" tried to execute " + echexec);
+		console.log(from +" tried to execute " + echexec).toLowerCase();
 		if (echexecargs[0] == "modules") {
 			bot.say(config.channel[0], "Currently Available Modules:");
 			bot.say(config.channel[0], modulenames.toString());
@@ -94,7 +94,7 @@ function basicMessage(from, to, text, message) {
 				if (modulenames[modulecount2] == echexecargs[0]) {
 					modulevalid = 1;
 					if (!modulestarted[echexecargs[0]]) {
-						modules[echexecargs[0]].start();
+						modules[echexecargs[0]].start(from,to,bot,config,echexecargs);
 						modulestarted[echexecargs[0]] = true;
 					}
 					modules[echexecargs[0]].execute(from,to,bot,config,echexecargs);
