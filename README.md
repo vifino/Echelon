@@ -8,7 +8,7 @@ If you want to develop your own Module, just make a file with the ".js" extensio
 
 1. start()
   The "start" function should be your initialisation of things you need, because when the module is not used, it shouldn't
-  do anything. The "start" function has no arguments and only gets called once.
+  do anything. The "start" function has the same arguments as the execute function and only gets called once.
   
 2. execute(from,to,bot,config,echexecargs)
   The "execute" function is your main action. It has five arguments:
@@ -25,6 +25,8 @@ If you want to develop your own Module, just make a file with the ".js" extensio
     5. echexecargs
       The array of Arguments when the Module is called: "Echelon execute: (module) (arg1) (arg2) (arg3) ..."
       The "Echelon execute: " part is not casesensitive, the arguments are.
+
+These functions are required, but you dont need to execute anything in them.
 
 Requirements:
 
