@@ -1,16 +1,16 @@
 //Cookie counter
 
-var cookies = 0;
+var cookies=0;
 
 function start(from,to,bot,config,echexecargs) {
-  console.log("I hope you have cookies enabled")
+  console.log("I hope you have cookies enabled");
   bot.addListener("message", function(from, to, text, message) {
     bot.say(config.channel[0], "I hope you have cookies enabled");
     if (text.toLowerCase() == config.nick.toLowerCase()+ " +cookie")
     {
-      cookies += 1;
+      cookies+=1;
     } elseif (text.toLowerCase() == config.nick.toLowerCase()+ " -cookie")
-      cookies -= 1;
+      cookies-=1;
     {
     
     } elseif (text.toLowerCase() == config.nick.toLowerCase()+ " cookies")
