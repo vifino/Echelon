@@ -33,7 +33,7 @@ if (!files.hasOwnProperty(filecount)) continue;
 	var currentfilewoext = currentfile.slice(0,-3);
 	modules[currentfilewoext] = require("./modules/" + files[filecount]);
 	modulenames.push(currentfilewoext);
-	if (modules[currentfilewoext].autoload) {
+	if (typeof modules[currentfilewoext].autoload == "function") {
 		modules[currentfilewoext].autoload(bot, config);
 		modulestarted[currentfilewoext] = true;
 	}
@@ -103,7 +103,7 @@ function basicMessage(from, to, text, message) {
 						modules[echexecargs[0]].start(from,to,bot,config,echexecargs);
 						modulestarted[echexecargs[0]] = true;
 					}
-					if (modules[currentfilewoext].execute) {
+					if (typeof modules[currentfilewoext].execute == "function") {
 						modules[echexecargs[0]].execute(from,to,bot,config,echexecargs);
 					}
 					continue;
