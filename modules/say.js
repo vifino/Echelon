@@ -1,8 +1,9 @@
 //Say function
 //Usage: [nick] say [msg]
 
-function start(from,to,bot,config,echexecargs) {
-  console.log("Adding listener for say");
+function initSay(bot, config)
+{
+    console.log("Adding listener for say");
   bot.addListener("message", function(from, to, text, message) {
     if(text.toLowerCase().indexOf(config.nick.toLowerCase()+" say ") == 0)
     {
@@ -11,6 +12,15 @@ function start(from,to,bot,config,echexecargs) {
     };
   });
 }
+
+function start(from,to,bot,config,echexecargs) {
+  initSay(bot, config);
+}
+
+function autorun(bot,config) {
+  initSay(bot, config);
+}
+
 function execute() {
   // Nothing
 }
