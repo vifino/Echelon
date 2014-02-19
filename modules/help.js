@@ -3,12 +3,12 @@
 //Displays help about the bot
 	  
 function start(from,to,bot,config,echexecargs) {
-  console.log("Adding listener for SayHi");
+  console.log("Adding listener for help.js");
   bot.addListener("message", function(from, to, text, message) {
     if (text.toLowerCase() == config.nick.toLowerCase() + " help")
     	  {
       		//Help function
-      		console.log("Displaying help");
+      		console.log("Displaying help to "+from);
       		bot.say(config.channel[0], "Todo - Add info about bot");
       		if (from == config.botMaster)
       		{
