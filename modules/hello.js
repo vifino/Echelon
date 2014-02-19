@@ -2,8 +2,8 @@
 //Usage: Hello [nick]
 //Hello!
 
-function start(from,to,bot,config,echexecargs) {
-  console.log("Adding listener for SayHi")
+function helloInit(bot, config) {
+    console.log("Adding listener for SayHi")
   bot.addListener("message", function(from, to, text, message) {
     if (text.toLowerCase().replace(",","".replace(".","").replace("!","")) == "hello " + config.nick.toLowerCase())
     {
@@ -12,6 +12,15 @@ function start(from,to,bot,config,echexecargs) {
     };
   });
 }
+
+function start(from,to,bot,config,echexecargs) {
+  helloInit(bot, config);
+}
+
+function autorun(bot, config) {
+  helloInit(bot, config);
+}
+
 function execute() {
   // Nothing
 }
