@@ -3,7 +3,7 @@
 //Hello!
 
 function helloInit(bot, config) {
-    console.log("Adding listener for SayHi")
+  console.log("Adding listener for hello.js");
   bot.addListener("message", function(from, to, text, message) {
     if (text.toLowerCase().replace(",","".replace(".","").replace("!","")) == "hello " + config.nick.toLowerCase())
     {
@@ -14,10 +14,12 @@ function helloInit(bot, config) {
 }
 
 function start(from,to,bot,config,echexecargs) {
+  console.log("Hello started manually");
   helloInit(bot, config);
 }
 
 function autorun(bot, config) {
+  console.log("Hello started automatically");
   helloInit(bot, config);
 }
 
