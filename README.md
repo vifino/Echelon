@@ -16,15 +16,15 @@ If you want to develop your own Module, just make a file with the ".js" extensio
       The one who issued the command.
       
     2. to
-      The one who received the message. This should be the Bot's Name if the bot received a private message.
+      - The one who received the message. This should be the Bot's Name if the bot received a private message.
     3. bot
-      This is the IRC Object. issue normal IRC commands.
+      - This is the IRC Object. issue normal IRC commands.
     4. config
-      The config has six Variables: channel(Array, one object.) , server (String) , port (Number) , nick (String) , 
-      realName (String) and the botMaster (String, The Admin of that Bot.). Most of them are self-explanatory.
+      - The config has six Variables: channel(Array, one object.) , server (String) , port (Number) , nick (String) , 
+      - realName (String) and the botMaster (String, The Admin of that Bot.). Most of them are self-explanatory.
     5. echexecargs
-      The array of Arguments when the Module is called: "Echelon execute: (module) (arg1) (arg2) (arg3) ..."
-      The "Echelon execute " part is not casesensitive, the arguments are.
+      - The array of Arguments when the Module is called: "Echelon execute: (module) (arg1) (arg2) (arg3) ..."
+      - The "Echelon execute " part is not casesensitive, the arguments are.
 
 3. ( Optional ) autorun(bot, config)
   This function is for modules that want to auto-execute stuff. It has 2 Arguments:
