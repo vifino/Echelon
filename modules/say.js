@@ -4,12 +4,11 @@
 function start(from,to,bot,config,echexecargs) {
   console.log("Adding listener for say");
   bot.addListener("message", function(from, to, text, message) {
-    if(text.toLowerCase().indexOf(config.nick.toLowerCase()+" say ") == 0)
+    if(text.toLowerCase().substring(0,config.nick.lenght() + 5) == config.nick.toLowerCase() + " say ")
     {
-      var regEx = new RegExp(config.nick+" say ", "ig");
-      var result = text.replace(regEx, "");
       
-      bot.say(config.channel[0], text.replace(regEx, replaceMask));
+      
+      bot.say(config.channel[0], text.toLowerCase().substring(config.nick.lenght() + 6));
     };
   });
 }
