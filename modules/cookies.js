@@ -28,7 +28,7 @@ function start(from,to,bot,config,echexecargs) {
     }
     else if (text.toLowerCase().indexOf(config.nick.toLowerCase()+ " *") == 0)
     {
-      var regEx = new RegExp(config.nick+" -", "ig");
+      var regEx = new RegExp(config.nick+" *", "ig");
       var add = parseFloat(text.replace(regEx, ""));
       if (add!=NaN && add>0)
       {
@@ -38,7 +38,7 @@ function start(from,to,bot,config,echexecargs) {
     } 
     else if (text.toLowerCase().indexOf(config.nick.toLowerCase()+ " /") == 0)
     {
-      var regEx = new RegExp(config.nick+" -", "ig");
+      var regEx = new RegExp(config.nick+" /", "ig");
       var add = parseFloat(text.replace(regEx, ""));
       if (add!=NaN && add>0)
       {
