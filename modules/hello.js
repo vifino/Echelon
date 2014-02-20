@@ -2,13 +2,19 @@
 //Usage: Hello [nick]
 //Hello!
 
+var Replylist = [
+  "Hello"
+  "Hi"
+  "Greetings"
+];
+
 function helloInit(bot, config) {
   console.log("Adding listener for hello.js");
   bot.addListener("message", function(from, to, text, message) {
     if (text.toLowerCase().replace(",","".replace(".","").replace("!","")) == "hello " + config.nick.toLowerCase())
     {
-      console.log("Hello!")
-      bot.say(config.channel[0], "Hello, "+from+ "." );
+      var randomNumber = Math.floor(Math.random()*Replylist.length);
+      bot.say(config.channel[0], Replylist[randomNumber]+", "+from+ "." );
     };
   });
 }
