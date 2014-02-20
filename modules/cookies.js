@@ -13,6 +13,8 @@ function start(from,to,bot,config,echexecargs) {
       if (add!=NaN)
       {
         cookies += add;
+      } else {
+        bot.say(config.channel[0], "Thats not a number...");
       }
     }
     else if (text.toLowerCase().indexOf(config.nick.toLowerCase()+ " -") == 0)
@@ -22,6 +24,8 @@ function start(from,to,bot,config,echexecargs) {
       if (add!=NaN)
       {
         cookies -= add;
+      } else {
+        bot.say(config.channel[0], "Thats not a number...");
       }
     } 
     else if (text.toLowerCase() == config.nick.toLowerCase()+ " cookies")
