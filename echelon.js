@@ -60,40 +60,41 @@ bot.addListener("message", basicMessage);
 
 function basicJoin(channel, who) {
 	// Welcome them in if he is not my master!
-if (who == config.botMaster)
-	  {
-	bot.say(config.channel[0], "Welcome, Master " + who + ".");
-	  }
+	if (who == config.botMaster)
+	{
+		bot.say(config.channel[0], "Welcome, Master " + who + ".");
+	}
 	else if (who == config.nick)
-	  {
-	console.log("Main Programm Loaded.");
-	  }
+	{
+		console.log("Main Programm Loaded.");
+	}
 };
 
 function basicMessage(from, to, text, message) {
 	if (text.toLowerCase() == config.nick.toLowerCase() + " time")
-	  {
+	{
 		console.log("User " + from + " Requested Time.");
 		var date = new Date();
 		var current_hour = date.getHours();
 		var current_min = date.getMinutes();
 		var current_sec = date.getSeconds();
-
+		
 		bot.say(config.channel[0],"Current Time: " + current_hour + ":" + current_min + ":" + current_sec);
-	  }
+	}
 	else if (text.toLowerCase() == config.nick.toLowerCase() + " logout")
-	  {
+	{
 		console.log(from +" requested logout.")
 		if (from == config.botMaster) {
 			console.log("Request granted.");
 			bot.say(config.channel[0], "Request granted.");
 			bot.disconnect("Logging Out on Admin request.");
 		}
-		else {
-		console.log("Request denied.");
-		bot.say(config.channel[0], "Request denied.");
+		else
+		{
+			console.log("Request denied.");
+			bot.say(config.channel[0], "Request denied.");
 		};
-	  }
+	}
 	else if (text.substring(0,9 + config.nick.length).toLowerCase() == config.nick.toLowerCase() + " execute ")
 	{
 		var echexec = text.substring(9 + config.nick.length); //.toLowerCase();
@@ -118,13 +119,13 @@ function basicMessage(from, to, text, message) {
 					continue;
 				};
 			};
-			if (modulevalid = 0) {
-		  	console.log("Invalid module.");
-		  	bot.say(config.channel[0], "'"+echexec.toLowerCase()+ "' is not a valid module. Use 'execute modules' for a list of modules.");
+			if (modulevalid == 0) {
+				console.log("Invalid module.");
+				bot.say(config.channel[0], "'"+echexec.toLowerCase()+ "' is not a valid module. Use 'execute modules' for a list of modules.");
 			};
 		};
-	  }
+	}
 	else {
-			console.log(from + ": " + text);
-	  };
+		console.log(from + ": " + text);
+	};
 }
