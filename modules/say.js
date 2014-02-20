@@ -14,10 +14,12 @@ function initSay(bot, config)
 }
 
 function start(from,to,bot,config,echexecargs) {
+  console.log("say.js started manually")
   initSay(bot, config);
 }
 
 function autorun(bot,config) {
+  console.log("say.js started automatically")
   initSay(bot, config);
 }
 
