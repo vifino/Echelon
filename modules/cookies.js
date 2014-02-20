@@ -22,8 +22,33 @@ function start(from,to,bot,config,echexecargs) {
       var add = parseFloat(text.replace(regEx, ""));
       if (add!=NaN && add>0)
       {
-        bot.action(config.channel[0], "has "+(-add)+" stolen.");
+        bot.action(config.channel[0], "has "+add+" stolen.");
         cookies -= add;
+      }
+    }
+    else if (text.toLowerCase().indexOf(config.nick.toLowerCase()+ " *") == 0)
+    {
+      var regEx = new RegExp(config.nick+" -", "ig");
+      var add = parseFloat(text.replace(regEx, ""));
+      if (add!=NaN && add>0)
+      {
+        bot.action(config.channel[0], "'s cookies had multiplied by "+add+".");
+        cookies *= add;
+      }
+    } 
+    else if (text.toLowerCase().indexOf(config.nick.toLowerCase()+ " /") == 0)
+    {
+      var regEx = new RegExp(config.nick+" -", "ig");
+      var add = parseFloat(text.replace(regEx, ""));
+      if (add!=NaN && add>0)
+      {
+        if (cookies!=0)
+        {
+          bot.action(config.channel[0], "'s cookies had divided by "+add+".");
+          cookies /= add;
+        } else {
+          bot.say(config.channel[0], "I will not divide by zero.");
+        }
       }
     } 
     else if (text.toLowerCase() == config.nick.toLowerCase()+ " cookies")
