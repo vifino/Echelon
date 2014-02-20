@@ -23,7 +23,7 @@ If you want to develop your own Module, just make a file with the ".js" extensio
       - The config has six Variables: channel(Array, one object.) , server (String) , port (Number) , nick (String) , 
       - realName (String) and the botMaster (String, The Admin of that Bot.). Most of them are self-explanatory.
     5. echexecargs
-      - The array of Arguments when the Module is called: "Echelon execute: (module) (arg1) (arg2) (arg3) ..."
+      - The array of Arguments when the Module is called: "Echelon execute (module) (arg1) (arg2) (arg3) ..."
       - The "Echelon execute " part is not casesensitive, the arguments are.
 
 3. ( Optional ) autoload(bot, config)
