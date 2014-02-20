@@ -4,6 +4,7 @@
 // Declaring some Vars...
 var irc = require("irc");
 var fs = require("fs");
+var _ = require("Underscore");
 var config = require("./config");
 var bot = new irc.Client(config.server, config.nick, {
 	channels: config.channel,
@@ -33,9 +34,14 @@ if (!files.hasOwnProperty(filecount)) continue;
 	var currentfilewoext = currentfile.slice(0,-3);
 	modules[currentfilewoext] = require("./modules/" + files[filecount]);
 	modulenames.push(currentfilewoext);
-	console.log(typeof(modules[currentfilewoext].autorun));
-	if (typeof(modules[currentfilewoext].autoload) == 'function') {
-		modules[currentfilewoext].autoload(bot, config);
+	var currentmodule = modules[currentfilewoext];
+	var currentmoduleauto = currentmodule["autoload"];
+	// console.log(currentmodule);
+	// console.log(currentmoduleauto);
+	// console.log(_.isFunction(currentmoduleauto));
+	// console.log(typeof(currentmoduleauto));
+	if ( _.isFunction(currentmoduleauto) ) {  //_.isFunction(modules[currentfilewoext].autoload)
+		currentmoduleauto(bot, config);
 		console.log("Autoloaded "+currentfilewoext);
 		modulestarted[currentfilewoext] = true;
 	}
