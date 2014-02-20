@@ -11,7 +11,9 @@ var Replylist = [
 function helloInit(bot, config) {
   console.log("Adding listener for hello.js");
   bot.addListener("message", function(from, to, text, message) {
-    if (text.toLowerCase().indexOf("hello")<text.toLowerCase().indexOf(config.nick.toLowerCase()))
+    var HelloIndex=text.toLowerCase().indexOf("hello");
+    var NickIndex=text.toLowerCase().indexOf(config.nick.toLowerCase());
+    if (HelloIndex!=-1 && NickIndex!=-1 && HelloIndex<NickIndex)
     {
       var randomNumber = Math.floor(Math.random()*Replylist.length);
       bot.say(config.channel[0], Replylist[randomNumber]+", "+from+ "." );
