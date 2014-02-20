@@ -10,10 +10,9 @@ function start(from,to,bot,config,echexecargs) {
     {
       var regEx = new RegExp(config.nick+" +", "ig");
       var add = parseFloat(text.replace(regEx, ""));
-      if (add==NaN)
+      if (add!=NaN && add>0)
       {
-        bot.say(config.channel[0], "Thats not a number...");
-      } else {
+        bot.action(config.channel[0], "gets "+cookies+" cookies.");
         cookies += add;
       }
     }
@@ -21,10 +20,9 @@ function start(from,to,bot,config,echexecargs) {
     {
       var regEx = new RegExp(config.nick+" -", "ig");
       var add = parseFloat(text.replace(regEx, ""));
-      if (add==NaN)
+      if (add!=NaN && add>0)
       {
-        bot.say(config.channel[0], "Thats not a number...");
-      } else {
+        bot.action(config.channel[0], "has "+(-cookies)+" stolen.");
         cookies -= add;
       }
     } 
