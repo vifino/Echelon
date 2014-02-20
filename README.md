@@ -6,7 +6,7 @@ They can be permanently loaded and they can add events.
 
 If you want to develop your own Module, just make a file with the ".js" extension and implement at least two Functions:
 
-1. ( Isnt going to be called it autorun function is there ) start()
+1. ( Isnt going to be called it autoload function is there ) start()
   The "start" function should be your initialisation of things you need, because when the module is not used, it shouldn't
   do anything. The "start" function has the same arguments as the execute function and only gets called once.
   
