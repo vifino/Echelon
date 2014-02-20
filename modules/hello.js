@@ -28,4 +28,4 @@ function execute() {
 }
 exports.start = start;
 exports.execute = execute;
-exports.autorun = autorun;
+exports.autoload = autorun;

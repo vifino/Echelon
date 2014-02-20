@@ -40,16 +40,16 @@ if (!files.hasOwnProperty(filecount)) continue;
 	// console.log(currentmoduleauto);
 	// console.log(_.isFunction(currentmoduleauto));
 	// console.log(typeof(currentmoduleauto));
+	console.log("Loaded ", currentfilewoext);
 	if ( _.isFunction(currentmoduleauto) ) {  //_.isFunction(modules[currentfilewoext].autoload)
 		currentmoduleauto(bot, config);
-		console.log("Autoloaded "+currentfilewoext);
+		console.log("Autorun executed in Module "+currentfilewoext);
 		modulestarted[currentfilewoext] = true;
 	}
 	else {
-		console.log("Did not autoload "+currentfilewoext+". (It is not type 'function')");
+		console.log("Did not autorun Module "+currentfilewoext+". (It is not type 'function')");
 		modulestarted[currentfilewoext] = false;
 	};
-	console.log("Loaded ", currentfilewoext);
 };	
 console.log("Finished Loading Modules.");
 // Finished Loading of modules.
