@@ -36,10 +36,11 @@ if (!files.hasOwnProperty(filecount)) continue;
 	console.log(typeof(modules[currentfilewoext].autorun));
 	if (typeof(modules[currentfilewoext].autoload) == 'function') {
 		modules[currentfilewoext].autoload(bot, config);
-		console.log("Autoload");
+		console.log("Autoloaded "+currentfilewoext);
 		modulestarted[currentfilewoext] = true;
 	}
 	else {
+		console.log("Did not autoload "+currentfilewoext+". (It is not type 'function')");
 		modulestarted[currentfilewoext] = false;
 	};
 	console.log("Loaded ", currentfilewoext);
@@ -93,8 +94,7 @@ function basicMessage(from, to, text, message) {
 		var echexecargs = echexec.split(" ");
 		console.log(from +" tried to execute " + echexec.toLowerCase());
 		if (echexecargs[0] == "modules") {
-			bot.say(config.channel[0], "Currently Available Modules:");
-			bot.say(config.channel[0], modulenames.toString());
+			bot.say(config.channel[0], "Modules ("+modulenames.length+"): " +modulenames.toString());
 		}
 		else {
 			var modulevalid = 0;
@@ -113,12 +113,12 @@ function basicMessage(from, to, text, message) {
 				};
 			};
 			if (modulevalid = 0) {
-			console.log("No Valid Command.");
-			bot.say(config.channel[0], "No Valid Command.");
+		  	console.log("Invalid module.");
+		  	bot.say(config.channel[0], "'"+echexec.toLowerCase()+ "' is not a valid module. Use 'execute modules' for a list of modules.");
 			};
 		};
 	  }
 	else {
-		console.log(from + ": " + text);
+			console.log(from + ": " + text);
 	  };
 }
