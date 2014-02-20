@@ -12,7 +12,7 @@ function start(from,to,bot,config,echexecargs) {
       var add = parseFloat(text.replace(regEx, ""));
       if (add!=NaN && add>0)
       {
-        bot.action(config.channel[0], "gets "+cookies+" cookies.");
+        bot.action(config.channel[0], "gets "+add+" cookies.");
         cookies += add;
       }
     }
@@ -22,7 +22,7 @@ function start(from,to,bot,config,echexecargs) {
       var add = parseFloat(text.replace(regEx, ""));
       if (add!=NaN && add>0)
       {
-        bot.action(config.channel[0], "has "+(-cookies)+" stolen.");
+        bot.action(config.channel[0], "has "+(-add)+" stolen.");
         cookies -= add;
       }
     } 
