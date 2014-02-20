@@ -34,4 +34,4 @@ If you want to develop your own Module, just make a file with the ".js" extensio
 
 Requirements:
 
-Node.JS and the IRC Module.
+Node.JS, the Node-IRC Module and the Underscore-Module.
