@@ -6,13 +6,23 @@ function start(from,to,bot,config,echexecargs) {
   console.log("I hope you have cookies enabled");
   bot.say(config.channel[0], "I hope you have cookies enabled");
   bot.addListener("message", function(from, to, text, message) {
-    if (text.toLowerCase() == config.nick.toLowerCase()+ " +cookie")
+    if (text.toLowerCase().indexOf(config.nick.toLowerCase()+ " +") == 0)
     {
-      cookies += 1;
-    } 
-    else if (text.toLowerCase() == config.nick.toLowerCase()+ " -cookie")
+      var regEx = new RegExp(config.nick+" +", "ig");
+      var add = parseFloat(text.replace(regEx, ""));
+      if (add!=NaN)
+      {
+        cookies += add;
+      }
+    }
+    else if (text.toLowerCase().indexOf(config.nick.toLowerCase()+ " -") == 0)
     {
-      cookies -= 1;
+      var regEx = new RegExp(config.nick+" -", "ig");
+      var add = parseFloat(text.replace(regEx, ""));
+      if (add!=NaN)
+      {
+        cookies -= add;
+      }
     } 
     else if (text.toLowerCase() == config.nick.toLowerCase()+ " cookies")
     {
