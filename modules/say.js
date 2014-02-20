@@ -7,8 +7,7 @@ function initSay(bot, config)
   bot.addListener("message", function(from, to, text, message) {
     if(text.toLowerCase().indexOf(config.nick.toLowerCase()+" say ") == 0)
     {
-      var regEx = new RegExp(config.nick+" say ", "ig");
-      bot.say(config.channel[0], text.replace(regEx, ""));
+      bot.say(config.channel[0], text.substring((config.nick+" say ").length,text.length));
     };
   });
 }
