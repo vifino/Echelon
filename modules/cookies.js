@@ -10,22 +10,22 @@ function start(from,to,bot,config,echexecargs) {
     {
       var regEx = new RegExp(config.nick+" +", "ig");
       var add = parseFloat(text.replace(regEx, ""));
-      if (add!=NaN)
+      if (add==NaN)
       {
-        cookies += add;
-      } else {
         bot.say(config.channel[0], "Thats not a number...");
+      } else {
+        cookies += add;
       }
     }
     else if (text.toLowerCase().indexOf(config.nick.toLowerCase()+ " -") == 0)
     {
       var regEx = new RegExp(config.nick+" -", "ig");
       var add = parseFloat(text.replace(regEx, ""));
-      if (add!=NaN)
+      if (add==NaN)
       {
-        cookies -= add;
-      } else {
         bot.say(config.channel[0], "Thats not a number...");
+      } else {
+        cookies -= add;
       }
     } 
     else if (text.toLowerCase() == config.nick.toLowerCase()+ " cookies")
@@ -38,14 +38,19 @@ function start(from,to,bot,config,echexecargs) {
       {
         bot.say(config.channel[0], "I'm in debt, I owe "+(-cookies)+" cookies...");
       } 
-      else {
+      else if (cookies==NaN) {
+        bot.say(config.channel[0], "My cookies are broken, they are NaN.");
+        console.log("Resetting cookie counter");
+        cookies=0;
+      } else {
         bot.say(config.channel[0], "I don't have any cookies.");
       }
     }
   });
 }
 function execute() {
-  // Nothing
+  //Reset cookie counter
+  cookies=0;
 }
 exports.start = start;
 exports.execute = execute;
