@@ -3,8 +3,8 @@
 //Hello!
 
 var Replylist = [
-  "Hello"
-  "Hi"
+  "Hello",
+  "Hi",
   "Greetings"
 ];
 
