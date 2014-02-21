@@ -2,15 +2,13 @@
 //usage: rude word [nick]
 //rude word here.
 
-var replies =
-[
+var replies = [
 	"Go fall down a hole",
 	"You STFU",
 	"You're a retard"
 ];
 
-function rudeMod(bot, confic)
-{
+function rudeMod(bot, confic) {
 	console.log("Adding listener for rude.js");
 	bod.addListener("message", function(from, to, text, message)
 	{
@@ -36,20 +34,17 @@ function rudeMod(bot, confic)
 	});
 }
 
-function start(from, to, bot, config, echexecargs)
-{
+function start(from, to, bot, config, echexecargs) {
 	console.log("Rude started manually");
 	rudeInit(bot, config);
 }
 
-function autorun(bot, config)
-{
+function autorun(bot, config) {
 	console.log("Rude started automatically");
 	rudeInit(bot, config);
 }
 
-function execute
-{
+function execute() {
 	//nothing
 }
 
