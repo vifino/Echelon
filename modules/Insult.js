@@ -1,4 +1,4 @@
-//Rudeness module
+//Insult module
 
 var replies = [
 	"Fuck off",
@@ -35,12 +35,12 @@ function Init(bot, config) {
 }
 
 function start(from, to, bot, config, echexecargs) {
-	console.log("Rudeness.js started manually");
+	console.log("Insult.js started manually");
 	Init(bot, config);
 }
 
 function autorun(bot, config) {
-	console.log("Rudeness.js started automatically");
+	console.log("Insult.js started automatically");
 	Init(bot, config);
 }
 
