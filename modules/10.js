@@ -35,14 +35,14 @@ function start() {
                     bot.say(config.channel[0], "Yay, I win.");
                     GameStarted=false;
                     Player="";
-                }
-            }
+                };
+            };
             AskQuestion();
         }
         if (text.toLowerCase().indexOf("debug")>-1)
         { //Debug
             bot.say(config.channel[0], "Your number is between "+Min+" and "+Max+".");
-        }
+        };
     });
 }
 
