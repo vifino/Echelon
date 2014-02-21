@@ -6,6 +6,8 @@ var Max=100;
 var lastquestion=0;
 var lastvalue=0;
 
+var AlreadyAsked = new Array();
+
 function start(from,to,bot,config,echexecargs) {
     // Do your setup here
     bot.addListener("message", function(from, to, text, message) {
@@ -15,21 +17,15 @@ function start(from,to,bot,config,echexecargs) {
             var No=(text.toLowerCase().indexOf("no")>-1);
             if (Yes != No) //XOR
             {
-                var IsLower = (lastvalue<Min+((Max-Min)/2));
+                AlreadyAsked.push(lastvalue);
                 if (lastquestion==0)
                 {
-                    if (IsLower)
-                    {
-                        if (Yes) Max=lastvalue;
-                        if (No) Min=lastvalue;
-                    }
-                } else if (lastquestion==1) {
                     if (IsLower)
                     {
                         if (Yes) Min=lastvalue;
                         if (No) Max=lastvalue;
                     }
-                } else if (lastquestion==2) {
+                } else {
                     if (Yes)
                     {
                         bot.say(config.channel[0], "Yay, I win.");
@@ -58,18 +54,30 @@ function AskQuestion(bot,config)
         
         if (Math.abs(Max-Min)<5 || questions<2)
         { //Take a guess
-            lastquestion=2;
-            lastvalue = Math.floor((Math.random()*(Max-Min))+Min);
-            bot.say(config.channel[0],"Question "+questions+": Is your number "+lastvalue+"?");
+            lastquestion=1;
+            var foundnumber=false;
+            for (int i=0;i<50;i++)
+            {
+                lastvalue = Math.floor((Math.random()*(Max-Min))+Min);
+                if (AlreadyAsked.indexOf(lastvalue)!=-1)
+                {
+                    foundnumber=true;
+                    break;
+                }
+            }
+            
+            if (foundnumber)
+            {
+                bot.say(config.channel[0],"Question "+questions+": Is your number "+lastvalue+"?");
+            } else {
+                bot.say(config.channel[0],"CHEATER!");
+            }
         } else {
             lastquestion = Math.round(Math.random());
             if (lastquestion==0)
             {
-                lastvalue = Math.floor((Math.random()*((Max*0.5)-Min))+Min);
-                bot.say(config.channel[0],"Question "+questions+": Is your number under "+lastvalue+"?");
-            } else {
-                lastvalue = Math.floor((Math.random()*(Max-(Min*0.5)))+(Min*0.5));
-                bot.say(config.channel[0], "Question "+questions+": Is your number over "+lastvalue+"?");
+                lastvalue = Math.floor((Math.random()*(Max-Min))+Min);
+                bot.say(config.channel[0],"Question "+questions+": Is your number over "+lastvalue+"?");
             }
         }
     }
@@ -80,6 +88,7 @@ function execute(from,to,bot,config,echexecargs) {
     questions=10;
     Min=0;
     Max=100;
+    AlreadyAsked = [];
     bot.say(config.channel[0], from +", think of a number between 0 and 100. I will then try to guess it in "+questions+" questions.");
     GameStarted=true;
     Player=from;
