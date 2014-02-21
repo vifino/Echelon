@@ -1,6 +1,4 @@
-//rudeness module
-//usage: rude word [nick]
-//rude word here.
+//Rudeness module
 
 var replies = [
 	"Fuck off",
@@ -16,7 +14,7 @@ var listenfor = [
 	"fuck off"
 ]
 
-function rudeMod(bot, config) {
+function Init(bot, config) {
 	console.log("Adding listener for rude.js");
 	bot.addListener("message", function(from, to, text, message) {
 		var reply=false;
@@ -38,12 +36,12 @@ function rudeMod(bot, config) {
 
 function start(from, to, bot, config, echexecargs) {
 	console.log("Rudeness.js started manually");
-	rudeMod(bot, config);
+	Init(bot, config);
 }
 
 function autorun(bot, config) {
 	console.log("Rudeness.js started automatically");
-	rudeMod(bot, config);
+	Init(bot, config);
 }
 
 function execute() {
