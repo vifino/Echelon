@@ -1,4 +1,3 @@
-
 var questions;
 var GameStarted=false;
 var Player="";
@@ -35,7 +34,7 @@ function start() {
                 {
                     bot.say(config.channel[0], "Yay, I win.");
                     GameStarted=false;
-                    Player=""
+                    Player="";
                 }
             }
             AskQuestion();
