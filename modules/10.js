@@ -22,15 +22,17 @@ function start(from,to,bot,config,echexecargs) {
                 {
                     if (Yes) Min=lastvalue;
                     if (No) Max=lastvalue;
+                    AskQuestion(bot,config);
                 } else {
                     if (Yes)
                     {
                         bot.say(config.channel[0], "Yay, I win.");
                         GameStarted=false;
                         Player="";
+                    } else {
+                        AskQuestion(bot,config);
                     }
                 }
-                AskQuestion(bot,config);
             }
             if (text.toLowerCase().indexOf("debug")>-1)
             { //Debug
