@@ -64,8 +64,8 @@ function start(from,to,bot,config,echexecargs) {
 }
 
 function autorun(bot, config) {
-  console.log("Calculator started automatically");
-  init(bot, config);
+  //console.log("Calculator started automatically");
+  //init(bot, config);
 }
 
 function execute() {
