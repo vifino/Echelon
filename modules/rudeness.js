@@ -3,7 +3,7 @@
 var replies = [
 	"Fuck off",
 	"You STFU",
-	"Watch the sass, captain sassypants",
+	"Watch the sass",
 	"Go pick on someone else"
 ];
 
@@ -26,7 +26,7 @@ function Init(bot, config) {
 				break;
 			}
 		}
-		if (reply && text.toLowerCase().indexOf(config.nick.toLowerCase())==0)
+		if (reply && text.toLowerCase().indexOf(config.nick.toLowerCase())!=-1)
 		{
 			var randNumber = Math.floor(Math.random()*replies.length);
 			bot.say(config.channel[0], replies[randNumber] + ", " + from + ".");
