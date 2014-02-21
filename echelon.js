@@ -7,36 +7,44 @@ var fs = require("fs");
 var spawn = require('child_process').spawn;
 var _ = require("underscore");
 var config = require("./config");
-var bot = new irc.Client(config.server, config.nick, {
-	channels: config.channel,
-	port: config.port,
-	realName: config.realName,
-	userName: config.nick,
-});
-if (!config.pass == "") {
-	bot.say("nickserv", "identify " + config.pass);
-}
-var modulestarted = [];
-// Some First-Run Configuration
-if (!fs.existsSync("./modules")) {
-	fs.mkdirSync("./modules");
-}
-// Load Additional Modules.
-
 var modules = [];
 var modulestotal = 0;
+var currentfile;
+var currentmodule
+var currentfilewoext;
+var currentmoduleauto;
+var files;
+var bot;
+function spawnBot() {
+	bot = new irc.Client(config.server, config.nick, {
+		channels: config.channel,
+		port: config.port,
+		realName: config.realName,
+		userName: config.nick,
+	});
+	if (!config.pass == "") {
+		bot.say("nickserv", "identify " + config.pass);
+	};
+};
+var modulestarted = [];
+	// Some First-Run Configuration
+	if (!fs.existsSync("./modules")) {
+		fs.mkdirSync("./modules");
+}
+// Load Additional Modules.
+function loadModules() {
 console.log("Searching and loading Modules.");
-var files = fs.readdirSync("./modules");
-var modulenames = [];
+files = fs.readdirSync("./modules");
+modulenames = [];
 for(var filecount in files){
 if (!files.hasOwnProperty(filecount)) continue;
 	modulestotal = modulestotal + 1;
-	var currentfile = files[filecount];
-	var currentfilewoext = currentfile.slice(0,-3);
+	currentfile = files[filecount];
+	currentfilewoext = currentfile.slice(0,-3);
 	modules[currentfilewoext] = require("./modules/" + files[filecount]);
 	modulenames.push(currentfilewoext);
-	var currentmodule = modules[currentfilewoext];
-	var currentmoduleauto = currentmodule["autoload"];
+	currentmodule = modules[currentfilewoext];
+	currentmoduleauto = currentmodule["autoload"];
 	// console.log(currentmodule);
 	// console.log(currentmoduleauto);
 	// console.log(_.isFunction(currentmoduleauto));
@@ -53,12 +61,14 @@ if (!files.hasOwnProperty(filecount)) continue;
 	};
 };	
 console.log("Finished Loading Modules.");
+};
 // Finished Loading of modules.
 
 // Listen for joins
+function basicListeners(bot) {
 bot.addListener("join", basicJoin);
 bot.addListener("message", basicMessage);
-
+}
 function basicJoin(channel, who) {
 	// Welcome them in if he is not my master!
 	if (who == config.botMaster)
@@ -102,8 +112,11 @@ function basicMessage(from, to, text, message) {
 		if (from == config.botMaster) {
 			console.log("Request granted.");
 			bot.say(config.channel[0], "Request granted.");
-			var deploySh = spawn('bash', [ 'start.sh' ] );
 			bot.disconnect("Restarting on Admin request.");
+			spawnBot();
+			loadModules();
+			basicListeners();
+			
 		}
 		else
 		{
@@ -145,3 +158,6 @@ function basicMessage(from, to, text, message) {
 		console.log(from + ": " + text);
 	};
 }
+spawnBot();
+loadModules();
+basicListeners();
