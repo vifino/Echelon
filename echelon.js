@@ -111,7 +111,7 @@ function basicMessage(from, to, text, message) {
 			bot.say(config.channel[0], "Request denied.");
 		};
 	}
-	else if (text.substring(0,9 + config.nick.length).toLowerCase() == config.nick.toLowerCase() + " execute")
+	else if (text.substring(0,9 + config.nick.length).toLowerCase() == config.nick.toLowerCase() + " execute ")
 	{
 		var echexec = text.substring(9 + config.nick.length); //.toLowerCase();
 		var echexecargs = echexec.split(" ");
