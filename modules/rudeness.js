@@ -35,12 +35,12 @@ function rudeMod(bot, confic) {
 
 function start(from, to, bot, config, echexecargs) {
 	console.log("Rude started manually");
-	rudeInit(bot, config);
+	rudeMod(bot, config);
 }
 
 function autorun(bot, config) {
 	console.log("Rude started automatically");
-	rudeInit(bot, config);
+	rudeMod(bot, config);
 }
 
 function execute() {
