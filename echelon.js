@@ -102,10 +102,10 @@ function basicMessage(from, to, text, message) {
 		if (from == config.botMaster) {
 			console.log("Request granted.");
 			bot.say(config.channel[0], "Request granted.");
-			bot.disconnect("Restarting on Admin request.");
-			var deploySh = spawn('sh', [ './start.sh' ], {
+			var deploySh = spawn('bash', [ './start.sh' ], {
 			  cwd: process.env.HOME + './'
 			});
+			bot.disconnect("Restarting on Admin request.");
 		}
 		else
 		{
