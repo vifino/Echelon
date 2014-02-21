@@ -88,7 +88,7 @@ function basicMessage(from, to, text, message) {
 		if (from == config.botMaster) {
 			console.log("Request granted.");
 			bot.say(config.channel[0], "Request granted.");
-			bot.disconnect("Logging Out on Admin request.");
+			bot.disconnect("Disconnecting on Admin request.");
 		}
 		else
 		{
@@ -111,12 +111,12 @@ function basicMessage(from, to, text, message) {
 			bot.say(config.channel[0], "Request denied.");
 		};
 	}
-	else if (text.substring(0,9 + config.nick.length).toLowerCase() == config.nick.toLowerCase() + " execute ")
+	else if (text.substring(0,8 + config.nick.length).toLowerCase() == config.nick.toLowerCase() + " execute")
 	{
 		var echexec = text.substring(9 + config.nick.length); //.toLowerCase();
 		var echexecargs = echexec.split(" ");
 		console.log(from +" tried to execute " + echexec.toLowerCase());
-		if (text.toLowerCase() == config.nick.toLowerCase() + " execute" || echexecargs[0] == "modules") {
+		if (text.length==(8 + config.nick.length) || echexecargs[0] == "modules") {
 			bot.say(config.channel[0], "Modules ("+modulenames.length+"): " +modulenames.toString());
 		}
 		else {
