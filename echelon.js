@@ -105,7 +105,7 @@ function basicMessage(from, to, text, message) {
 			bot.disconnect("Restarting on Admin request.");
 			var deploySh = spawn('sh', [ './start.sh' ], {
 			  cwd: process.env.HOME + './'
-			};
+			});
 		}
 		else
 		{
