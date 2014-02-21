@@ -5,10 +5,10 @@
 
 function init(bot, config) {
   bot.addListener("message", function(from, to, text, message) {
-    var input=text.toLowerCase().replace(config.nick.toLowerCase(),"").replace(/[^\d.-]/g, "").replace(",","").replace(":","").replace("!","").replace("?","");
-    
+    var NickIndex = text.toLowerCase().indexOf(config.nick.toLowerCase());
     if (NickIndex==0)
     {
+      var input=text.toLowerCase().replace(config.nick.toLowerCase(),"").replace(/[^\d.-]/g, "").replace(",","").replace(":","").replace("!","").replace("?","");
       bot.say(config.channel[0], expression(input));
     };
   });
