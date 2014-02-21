@@ -20,11 +20,8 @@ function start(from,to,bot,config,echexecargs) {
                 AlreadyAsked.push(lastvalue);
                 if (lastquestion==0)
                 {
-                    if (IsLower)
-                    {
-                        if (Yes) Min=lastvalue;
-                        if (No) Max=lastvalue;
-                    }
+                    if (Yes) Min=lastvalue;
+                    if (No) Max=lastvalue;
                 } else {
                     if (Yes)
                     {
@@ -56,7 +53,7 @@ function AskQuestion(bot,config)
         { //Take a guess
             lastquestion=1;
             var foundnumber=false;
-            for (var i=0;i<50;i++)
+            for (var i=0;i<10;i++)
             {
                 lastvalue = Math.floor((Math.random()*(Max-Min))+Min);
                 if (AlreadyAsked.indexOf(lastvalue)!=-1)
