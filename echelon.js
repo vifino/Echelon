@@ -10,7 +10,8 @@ var config = require("./config");
 var modules = [];
 var modulestotal = 0;
 var currentfile;
-var currentmodule
+var currentmodule;
+var modulesloaded = false;
 var currentfilewoext;
 var currentmoduleauto;
 var files;
@@ -33,32 +34,34 @@ var modulestarted = [];
 }
 // Load Additional Modules.
 function loadModules() {
-console.log("Searching and loading Modules.");
-files = fs.readdirSync("./modules");
-modulenames = [];
-for(var filecount in files){
-if (!files.hasOwnProperty(filecount)) continue;
-	modulestotal = modulestotal + 1;
-	currentfile = files[filecount];
-	currentfilewoext = currentfile.slice(0,-3);
-	modules[currentfilewoext] = require("./modules/" + files[filecount]);
-	modulenames.push(currentfilewoext);
-	currentmodule = modules[currentfilewoext];
-	currentmoduleauto = currentmodule["autoload"];
-	// console.log(currentmodule);
-	// console.log(currentmoduleauto);
-	// console.log(_.isFunction(currentmoduleauto));
-	// console.log(typeof(currentmoduleauto));
-	console.log("Loaded ", currentfilewoext);
-	if ( _.isFunction(currentmoduleauto) ) {  //_.isFunction(modules[currentfilewoext].autoload)
-		currentmoduleauto(bot, config);
-		console.log("Autorun executed in Module "+currentfilewoext);
-		modulestarted[currentfilewoext] = true;
-	}
-	else {
-		console.log("Did not autorun Module "+currentfilewoext+". (It is not type 'function')");
-		modulestarted[currentfilewoext] = false;
-	};
+	console.log("Searching and loading Modules.");
+	files = fs.readdirSync("./modules");
+	modulenames = [];
+	modulesloaded = false;
+	for(var filecount in files){
+	if (!files.hasOwnProperty(filecount)) continue;
+		modulestotal = modulestotal + 1;
+		currentfile = files[filecount];
+		currentfilewoext = currentfile.slice(0,-3);
+		modules[currentfilewoext] = require("./modules/" + files[filecount]);
+		modulenames.push(currentfilewoext);
+		currentmodule = modules[currentfilewoext];
+		currentmoduleauto = currentmodule["autoload"];
+		// console.log(currentmodule);
+		// console.log(currentmoduleauto);
+		// console.log(_.isFunction(currentmoduleauto));
+		// console.log(typeof(currentmoduleauto));
+		console.log("Loaded ", currentfilewoext);
+		if ( _.isFunction(currentmoduleauto) ) {  //_.isFunction(modules[currentfilewoext].autoload)
+			currentmoduleauto(bot, config);
+			console.log("Autorun executed in Module "+currentfilewoext);
+			modulestarted[currentfilewoext] = true;
+		}
+		else {
+			console.log("Did not autorun Module "+currentfilewoext+". (It is not type 'function')");
+			modulestarted[currentfilewoext] = false;
+		};
+		modulesloaded = true;
 };	
 console.log("Finished Loading Modules.");
 };
@@ -113,10 +116,7 @@ function basicMessage(from, to, text, message) {
 			console.log("Request granted.");
 			bot.say(config.channel[0], "Request granted.");
 			bot.disconnect("Restarting on Admin request.");
-			spawnBot();
-			loadModules();
-			basicListeners();
-			
+			start()
 		}
 		else
 		{
@@ -158,6 +158,29 @@ function basicMessage(from, to, text, message) {
 		console.log(from + ": " + text);
 	};
 }
-spawnBot();
-loadModules();
-basicListeners();
+function waitforVarTrue(variable, callback, arg1) {
+	if(bot== false) {
+			        setTimeout(waitforVarTrue(variable, callback), 50);
+	        return;
+	}
+	else {
+		callback(arg1)
+	}
+	
+};
+function waitforVarSet(variable, callback) {
+	if(bot== ! NaN) {
+			        setTimeout(waitforVarTrue(variable, callback), 50);
+	        return;
+	}
+	else {
+		callback()
+	}
+	
+};
+function start() {
+	spawnBot();
+	waitforVarSet(bot, loadModules);
+	waitforVarTrue(modulesloaded, basicListeners, bot);
+};
+start()
