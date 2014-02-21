@@ -36,6 +36,15 @@ function start(from,to,bot,config,echexecargs) {
             { //Debug
                 bot.say(config.channel[0], "Your number is between "+Min+" and "+Max+".");
             }
+            if (text.toLowerCase().indexOf("Again")>-1)
+            {
+                if (lastquestion==0)
+                {
+                    bot.say(config.channel[0],"Question "+questions+": Is your number over "+lastvalue+"?");
+                } else {
+                    bot.say(config.channel[0],"Question "+questions+": Is your number "+lastvalue+"?");
+                }
+            }
         }
     });
 }
