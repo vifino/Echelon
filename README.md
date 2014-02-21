@@ -35,4 +35,4 @@ If you want to develop your own Module, just make a file with the ".js" extensio
 Requirements:
  - A *NIX OS, maybe CygWin works, not confirmed
  - GNU Screen installed
-- Node.JS, the Node-IRC Module and the Underscore-Module.
+ - Node.JS, the Node-IRC Module and the Underscore-Module.
