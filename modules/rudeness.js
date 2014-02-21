@@ -10,8 +10,7 @@ var replies = [
 
 function rudeMod(bot, confic) {
 	console.log("Adding listener for rude.js");
-	bod.addListener("message", function(from, to, text, message)
-	{
+	bot.addListener("message", function(from, to, text, message) {
 		var fwordIndex = text.toLowerCase().indexOf("Fuck you");
 		var damnIndex = text.toLowerCase().indexOf("Damn you");
 		var stfuIndex = text.toLowerCase().indexOf("STFU");
