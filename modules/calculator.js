@@ -60,12 +60,12 @@ function expression (str) {
 
 function start(from,to,bot,config,echexecargs) {
   console.log("Calculator started manually");
-  helloInit(bot, config);
+  Init(bot, config);
 }
 
 function autorun(bot, config) {
   console.log("Calculator started automatically");
-  helloInit(bot, config);
+  Init(bot, config);
 }
 
 function execute() {
