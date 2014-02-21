@@ -1,31 +1,32 @@
-//rudeness module
-//usage: rude word [nick]
-//rude word here.
+//Rudeness module
 
 var replies = [
-	"Go fall down a hole",
+	"Fuck off",
 	"You STFU",
-	"You're a retard"
+	"Watch the sass, captain sassypants",
+	"Go pick on someone else"
 ];
 
-function rudeMod(bot, config) {
+var listenfor = [
+	"fuck you",
+	"damn you",
+	"stfu",
+	"fuck off"
+]
+
+function Init(bot, config) {
 	console.log("Adding listener for rude.js");
 	bot.addListener("message", function(from, to, text, message) {
-		var fwordIndex = text.toLowerCase().indexOf("Fuck you");
-		var damnIndex = text.toLowerCase().indexOf("Damn you");
-		var stfuIndex = text.toLowerCase().indexOf("STFU");
-		var nickIndex = text.toLowerCase().indexOf(config.nick.toLowerCase());
-		
-		var index = -1;
-		
-		if (fwordIndex != -1)
-			index = fwordIndex;
-		if (damnIndex != -1)
-			index = damnIndex;
-		if (stfuIndex != -1)
-			index = stfuIndex;
-			
-		if (index != -1 && nickIndex != -1 && index < nickIndex)
+		var reply=false;
+		for (var i=0;i<listenfor.length;i++)
+		{
+			if (text.toLowerCase().indexOf(listenfor[i].toLowerCase())!=-1)
+			{
+				reply=true;
+				break;
+			}
+		}
+		if (reply && text.toLowerCase().indexOf(config.nick.toLowerCase())==0)
 		{
 			var randNumber = Math.floor(Math.random()*replies.length);
 			bot.say(config.channel[0], replies[randNumber] + ", " + from + ".");
@@ -34,13 +35,13 @@ function rudeMod(bot, config) {
 }
 
 function start(from, to, bot, config, echexecargs) {
-	console.log("Rude started manually");
-	rudeMod(bot, config);
+	console.log("Rudeness.js started manually");
+	Init(bot, config);
 }
 
 function autorun(bot, config) {
-	console.log("Rude started automatically");
-	rudeMod(bot, config);
+	console.log("Rudeness.js started automatically");
+	Init(bot, config);
 }
 
 function execute() {
