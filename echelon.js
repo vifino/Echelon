@@ -98,7 +98,7 @@ function basicMessage(from, to, text, message) {
 	}
 	else if (text.toLowerCase() == config.nick.toLowerCase() + " restart")
 	{
-		console.log(from +" requested restart..")
+		console.log(from +" requested restart..");
 		if (from == config.botMaster) {
 			console.log("Request granted.");
 			bot.say(config.channel[0], "Request granted.");
