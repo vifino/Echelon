@@ -5,16 +5,16 @@
 
 function Init(bot, config) {
   bot.addListener("message", function(from, to, text, message) {
-    var NickIndex=text.toLowerCase().indexOf(config.nick.toLowerCase());
+    var input=text.toLowerCase().replace(config.nick.toLowerCase(),"").replace(/[^\d.-]/g, "").replace(",","").replace(":","").replace("!","").replace("?","");
     
     if (NickIndex==0)
     {
-      bot.say(config.channel[0], expr(text));
+      bot.say(config.channel[0], expression(input));
     };
   });
 }
 
-function expr (expr) {
+function expression (str) {
 
     var chars = expr.split("");
     var n = [], op = [], index = 0, oplast = true;
