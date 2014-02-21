@@ -56,7 +56,7 @@ function AskQuestion(bot,config)
         { //Take a guess
             lastquestion=1;
             var foundnumber=false;
-            for (int i=0;i<50;i++)
+            for (var i=0;i<50;i++)
             {
                 lastvalue = Math.floor((Math.random()*(Max-Min))+Min);
                 if (AlreadyAsked.indexOf(lastvalue)!=-1)
