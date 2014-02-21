@@ -37,7 +37,7 @@ function start(from,to,bot,config,echexecargs) {
                         Player="";
                     }
                 }
-                AskQuestion();
+                AskQuestion(bot,config);
             }
             if (text.toLowerCase().indexOf("debug")>-1)
             { //Debug
@@ -47,7 +47,7 @@ function start(from,to,bot,config,echexecargs) {
     });
 }
 
-function AskQuestion()
+function AskQuestion(bot,config)
 {
     if (questions<=0)
     {
@@ -83,7 +83,7 @@ function execute(from,to,bot,config,echexecargs) {
     bot.say(config.channel[0], from +", think of a number between 0 and 100. I will then try to guess it in "+questions+" questions.");
     GameStarted=true;
     Player=from;
-    AskQuestion();
+    AskQuestion(bot,config);
 }
 
 exports.start = start;
