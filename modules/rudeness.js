@@ -8,7 +8,7 @@ var replies = [
 	"You're a retard"
 ];
 
-function rudeMod(bot, confic) {
+function rudeMod(bot, config) {
 	console.log("Adding listener for rude.js");
 	bot.addListener("message", function(from, to, text, message) {
 		var fwordIndex = text.toLowerCase().indexOf("Fuck you");
