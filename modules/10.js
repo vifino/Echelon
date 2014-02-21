@@ -67,7 +67,7 @@ function AskQuestion(bot,config)
             for (var i=0;i<10;i++)
             {
                 lastvalue = Math.floor((Math.random()*(Max-Min))+Min);
-                if (AlreadyAsked.indexOf(lastvalue)!=-1)
+                if (AlreadyAsked.indexOf(lastvalue)=-1)
                 {
                     foundnumber=true;
                     break;
