@@ -36,7 +36,7 @@ function start(from,to,bot,config,echexecargs) {
             { //Debug
                 bot.say(config.channel[0], "Your number is between "+Min+" and "+Max+".");
             }
-            if (text.toLowerCase().indexOf("Again")>-1)
+            if (text.toLowerCase().indexOf("again")>-1)
             {
                 if (lastquestion==0)
                 {
