@@ -7,58 +7,71 @@ var fs = require("fs");
 var spawn = require('child_process').spawn;
 var _ = require("underscore");
 var config = require("./config");
-var bot = new irc.Client(config.server, config.nick, {
-	channels: config.channel,
-	port: config.port,
-	realName: config.realName,
-	userName: config.nick,
-});
-if (!config.pass == "") {
-	bot.say("nickserv", "identify " + config.pass);
-}
-var modulestarted = [];
-// Some First-Run Configuration
-if (!fs.existsSync("./modules")) {
-	fs.mkdirSync("./modules");
-}
-// Load Additional Modules.
-
 var modules = [];
 var modulestotal = 0;
-console.log("Searching and loading Modules.");
-var files = fs.readdirSync("./modules");
-var modulenames = [];
-for(var filecount in files){
-if (!files.hasOwnProperty(filecount)) continue;
-	modulestotal = modulestotal + 1;
-	var currentfile = files[filecount];
-	var currentfilewoext = currentfile.slice(0,-3);
-	modules[currentfilewoext] = require("./modules/" + files[filecount]);
-	modulenames.push(currentfilewoext);
-	var currentmodule = modules[currentfilewoext];
-	var currentmoduleauto = currentmodule["autoload"];
-	// console.log(currentmodule);
-	// console.log(currentmoduleauto);
-	// console.log(_.isFunction(currentmoduleauto));
-	// console.log(typeof(currentmoduleauto));
-	console.log("Loaded ", currentfilewoext);
-	if ( _.isFunction(currentmoduleauto) ) {  //_.isFunction(modules[currentfilewoext].autoload)
-		currentmoduleauto(bot, config);
-		console.log("Autorun executed in Module "+currentfilewoext);
-		modulestarted[currentfilewoext] = true;
-	}
-	else {
-		console.log("Did not autorun Module "+currentfilewoext+". (It is not type 'function')");
-		modulestarted[currentfilewoext] = false;
+var currentfile;
+var currentmodule;
+var modulesloaded = false;
+var currentfilewoext;
+var currentmoduleauto;
+var files;
+var bot;
+function spawnBot() {
+	bot = new irc.Client(config.server, config.nick, {
+		channels: config.channel,
+		port: config.port,
+		realName: config.realName,
+		userName: config.nick,
+	});
+	if (!config.pass == "") {
+		bot.say("nickserv", "identify " + config.pass);
 	};
+};
+var modulestarted = [];
+	// Some First-Run Configuration
+	if (!fs.existsSync("./modules")) {
+		fs.mkdirSync("./modules");
+}
+// Load Additional Modules.
+function loadModules() {
+	console.log("Searching and loading Modules.");
+	files = fs.readdirSync("./modules");
+	modulenames = [];
+	modulesloaded = false;
+	for(var filecount in files){
+	if (!files.hasOwnProperty(filecount)) continue;
+		modulestotal = modulestotal + 1;
+		currentfile = files[filecount];
+		currentfilewoext = currentfile.slice(0,-3);
+		modules[currentfilewoext] = require("./modules/" + files[filecount]);
+		modulenames.push(currentfilewoext);
+		currentmodule = modules[currentfilewoext];
+		currentmoduleauto = currentmodule["autoload"];
+		// console.log(currentmodule);
+		// console.log(currentmoduleauto);
+		// console.log(_.isFunction(currentmoduleauto));
+		// console.log(typeof(currentmoduleauto));
+		console.log("Loaded ", currentfilewoext);
+		if ( _.isFunction(currentmoduleauto) ) {  //_.isFunction(modules[currentfilewoext].autoload)
+			currentmoduleauto(bot, config);
+			console.log("Autorun executed in Module "+currentfilewoext);
+			modulestarted[currentfilewoext] = true;
+		}
+		else {
+			console.log("Did not autorun Module "+currentfilewoext+". (It is not type 'function')");
+			modulestarted[currentfilewoext] = false;
+		};
+		modulesloaded = true;
 };	
 console.log("Finished Loading Modules.");
+};
 // Finished Loading of modules.
 
 // Listen for joins
+function basicListeners(bot) {
 bot.addListener("join", basicJoin);
 bot.addListener("message", basicMessage);
-
+}
 function basicJoin(channel, who) {
 	// Welcome them in if he is not my master!
 	if (who == config.botMaster)
@@ -102,8 +115,8 @@ function basicMessage(from, to, text, message) {
 		if (from == config.botMaster) {
 			console.log("Request granted.");
 			bot.say(config.channel[0], "Request granted.");
-			var deploySh = spawn('bash', [ 'start.sh' ] );
 			bot.disconnect("Restarting on Admin request.");
+			start()
 		}
 		else
 		{
@@ -145,3 +158,29 @@ function basicMessage(from, to, text, message) {
 		console.log(from + ": " + text);
 	};
 }
+function waitforVarTrue(variable, callback, arg1) {
+	if(bot== false) {
+			        setTimeout(waitforVarTrue(variable, callback), 50);
+	        return;
+	}
+	else {
+		callback(arg1)
+	}
+	
+};
+function waitforVarSet(variable, callback) {
+	if(bot== ! NaN) {
+			        setTimeout(waitforVarTrue(variable, callback), 50);
+	        return;
+	}
+	else {
+		callback()
+	}
+	
+};
+function start() {
+	spawnBot();
+	waitforVarSet(bot, loadModules);
+	waitforVarTrue(modulesloaded, basicListeners, bot);
+};
+start()
