@@ -3,7 +3,7 @@
 //Crunches numbers into a calculator
 //Example: "Echelon, what is 5 * 2?" - " 10! "
 
-function Init(bot, config) {
+function init(bot, config) {
   bot.addListener("message", function(from, to, text, message) {
     var input=text.toLowerCase().replace(config.nick.toLowerCase(),"").replace(/[^\d.-]/g, "").replace(",","").replace(":","").replace("!","").replace("?","");
     
@@ -60,12 +60,12 @@ function expression (str) {
 
 function start(from,to,bot,config,echexecargs) {
   console.log("Calculator started manually");
-  helloInit(bot, config);
+  init(bot, config);
 }
 
 function autorun(bot, config) {
   console.log("Calculator started automatically");
-  helloInit(bot, config);
+  init(bot, config);
 }
 
 function execute() {
