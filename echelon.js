@@ -116,7 +116,7 @@ function basicMessage(from, to, text, message) {
 		var echexec = text.substring(9 + config.nick.length); //.toLowerCase();
 		var echexecargs = echexec.split(" ");
 		console.log(from +" tried to execute " + echexec.toLowerCase());
-		if (echexecargs[0] == "" || echexecargs[0] == "modules") {
+		if (echexecargs.length == 0 || echexecargs[0] == "modules") {
 			bot.say(config.channel[0], "Modules ("+modulenames.length+"): " +modulenames.toString());
 		}
 		else {
