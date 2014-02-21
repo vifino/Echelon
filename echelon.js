@@ -4,6 +4,7 @@
 // Declaring some Vars...
 var irc = require("irc");
 var fs = require("fs");
+var spawn = require('child_process').spawn;
 var _ = require("underscore");
 var config = require("./config");
 var bot = new irc.Client(config.server, config.nick, {
@@ -88,6 +89,23 @@ function basicMessage(from, to, text, message) {
 			console.log("Request granted.");
 			bot.say(config.channel[0], "Request granted.");
 			bot.disconnect("Logging Out on Admin request.");
+		}
+		else
+		{
+			console.log("Request denied.");
+			bot.say(config.channel[0], "Request denied.");
+		};
+	}
+	else if (text.toLowerCase() == config.nick.toLowerCase() + " restart")
+	{
+		console.log(from +" requested restart..")
+		if (from == config.botMaster) {
+			console.log("Request granted.");
+			bot.say(config.channel[0], "Request granted.");
+			bot.disconnect("Restarting on Admin request.");
+			var deploySh = spawn('sh', [ './start.sh' ], {
+			  cwd: process.env.HOME + './'
+			};
 		}
 		else
 		{
