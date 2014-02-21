@@ -4,7 +4,7 @@
 // Declaring some Vars...
 var irc = require("irc");
 var fs = require("fs");
-var _ = require("Underscore");
+var _ = require("underscore");
 var config = require("./config");
 var bot = new irc.Client(config.server, config.nick, {
 	channels: config.channel,
