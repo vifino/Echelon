@@ -18,7 +18,7 @@ function init(bot,config) {
     if (text.toLowerCase().replace(",","").replace(".","").replace("!","") == config.nick.toLowerCase())
      {
        var randomNumber = Math.floor(Math.random()*Replylist.length);
-       bot.say(config.channel[0], Replylist[randomNumber]);
+       bot.say(to, Replylist[randomNumber]);
      }
   });
 }

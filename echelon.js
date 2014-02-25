@@ -4,7 +4,6 @@
 // Declaring some Vars...
 var irc = require("irc");
 var fs = require("fs");
-var spawn = require('child_process').spawn;
 var _ = require("underscore");
 var config = require("./config");
 var modules = [];
@@ -71,12 +70,15 @@ console.log("Finished Loading Modules.");
 function basicListeners(bot) {
 bot.addListener("join", basicJoin);
 bot.addListener("message", basicMessage);
+bot.addListener('error', function(message) {
+    console.log('error: ', message);
+});
 }
 function basicJoin(channel, who) {
 	// Welcome them in if he is not my master!
 	if (who == config.botMaster)
 	{
-		bot.say(config.channel[0], "Welcome, Master " + who + ".");
+		bot.say(channel, "Welcome, Master " + who + ".");
 	}
 	else if (who == config.nick)
 	{
@@ -93,20 +95,20 @@ function basicMessage(from, to, text, message) {
 		var current_min = date.getMinutes();
 		var current_sec = date.getSeconds();
 		
-		bot.say(config.channel[0],"Current Time: " + current_hour + ":" + current_min + ":" + current_sec);
+		bot.say(from ,"Current Time: " + current_hour + ":" + current_min + ":" + current_sec);
 	}
 	else if (text.toLowerCase() == config.nick.toLowerCase() + " logout")
 	{
 		console.log(from +" requested logout.")
 		if (from == config.botMaster) {
 			console.log("Request granted.");
-			bot.say(config.channel[0], "Request granted.");
+			bot.say(from , "Request granted.");
 			bot.disconnect("Disconnecting on Admin request.");
 		}
 		else
 		{
 			console.log("Request denied.");
-			bot.say(config.channel[0], "Request denied.");
+			bot.say(from , "Request denied.");
 		};
 	}
 	else if (text.toLowerCase() == config.nick.toLowerCase() + " restart")
@@ -114,14 +116,14 @@ function basicMessage(from, to, text, message) {
 		console.log(from +" requested restart..");
 		if (from == config.botMaster) {
 			console.log("Request granted.");
-			bot.say(config.channel[0], "Request granted.");
+			bot.say(from , "Request granted.");
 			bot.disconnect("Restarting on Admin request.");
 			start()
 		}
 		else
 		{
 			console.log("Request denied.");
-			bot.say(config.channel[0], "Request denied.");
+			bot.say(to , "Request denied.");
 		};
 	}
 	else if (text.substring(0,8 + config.nick.length).toLowerCase() == config.nick.toLowerCase() + " execute")
@@ -130,7 +132,7 @@ function basicMessage(from, to, text, message) {
 		var echexecargs = echexec.split(" ");
 		console.log(from +" tried to execute " + echexec.toLowerCase());
 		if (text.length==(8 + config.nick.length) || echexecargs[0] == "modules") {
-			bot.say(config.channel[0], "Modules ("+modulenames.length+"): " +modulenames.toString());
+			bot.say(from , "Modules ("+modulenames.length+"): " +modulenames.toString());
 		}
 		else {
 			var modulevalid = 0;
@@ -150,12 +152,12 @@ function basicMessage(from, to, text, message) {
 			};
 			if (modulevalid == 0) {
 				console.log("Invalid module.");
-				bot.say(config.channel[0], "'"+echexec.toLowerCase()+ "' is not a valid module. Use 'execute modules' for a list of modules.");
+				bot.say(from , "'"+echexec.toLowerCase()+ "' is not a valid module. Use 'execute modules' for a list of modules.");
 			};
 		};
 	}
 	else {
-		console.log(from + ": " + text);
+		console.log(from + " => "+ to + ":" + text);
 	};
 }
 function waitforVarTrue(variable, callback, arg1) {

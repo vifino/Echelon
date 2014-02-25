@@ -28,7 +28,7 @@ function helloInit(bot, config) {
     if (index!=-1 && NickIndex!=-1 && index<NickIndex)
     {
       var randomNumber = Math.floor(Math.random()*Replylist.length);
-      bot.say(config.channel[0], Replylist[randomNumber]+", "+from+ "." );
+      bot.say(to, Replylist[randomNumber]+", "+from+ "." );
     };
   });
 }

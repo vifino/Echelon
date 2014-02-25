@@ -9,7 +9,7 @@ function init(bot, config) {
     if (NickIndex==0)
     {
       var input=text.toLowerCase().replace(config.nick.toLowerCase(),"").replace(",","").replace(":","").replace("!","").replace("?","");
-      bot.say(config.channel[0], expression(input));
+      bot.say(to, expression(input));
     };
   });
 }

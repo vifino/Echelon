@@ -12,7 +12,7 @@ function start(from,to,bot,config,echexecargs) {
       var add = parseFloat(text.replace(regEx, ""));
       if (add!=NaN && add>0)
       {
-        bot.action(config.channel[0], "gets "+add+" cookies.");
+        bot.action(to, "gets "+add+" cookies.");
         cookies += add;
       }
     }
@@ -22,7 +22,7 @@ function start(from,to,bot,config,echexecargs) {
       var add = parseFloat(text.replace(regEx, ""));
       if (add!=NaN && add>0)
       {
-        bot.action(config.channel[0], "has "+add+" stolen.");
+        bot.action(to, "has "+add+" Cookies stolen.");
         cookies -= add;
       }
     }
@@ -32,7 +32,7 @@ function start(from,to,bot,config,echexecargs) {
       var add = parseFloat(text.replace(regEx, ""));
       if (add!=NaN && add>0)
       {
-        bot.action(config.channel[0], "'s cookies had multiplied by "+add+".");
+        bot.action(to, "'s cookies got multiplied by "+add+".");
         cookies *= add;
       }
     } 
@@ -44,10 +44,10 @@ function start(from,to,bot,config,echexecargs) {
       {
         if (cookies!=0)
         {
-          bot.action(config.channel[0], "'s cookies had divided by "+add+".");
+          bot.action(to, "'s cookies got divided by "+add+".");
           cookies /= add;
         } else {
-          bot.say(config.channel[0], "I will not divide by zero.");
+          bot.say(to, "I will not divide by zero.");
         }
       }
     } 
@@ -55,18 +55,18 @@ function start(from,to,bot,config,echexecargs) {
     {
       if (cookies>0)
       {
-        bot.say(config.channel[0], "I have "+cookies+" cookies!");
+        bot.say(to, "I have "+cookies+" cookies!");
       } 
       else if (cookies<0)
       {
-        bot.say(config.channel[0], "I'm in debt, I owe "+(-cookies)+" cookies...");
+        bot.say(to, "I'm in debt, I owe "+(-cookies)+" cookies...");
       } 
       else if (cookies==NaN) {
-        bot.say(config.channel[0], "My cookies are broken, they are NaN.");
+        bot.say(to, "My cookies are broken, they are NaN.");
         console.log("Resetting cookie counter");
         cookies=0;
       } else {
-        bot.say(config.channel[0], "I don't have any cookies.");
+        bot.say(to, "I don't have any cookies.");
       }
     }
   });

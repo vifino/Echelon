@@ -9,12 +9,12 @@ function initHelp(bot, config) {
       {
       	//Help function
       	console.log("Displaying help to "+from);
-      	bot.say(config.channel[0], "I am "+config.nick+". I am an IRC bot in Node.JS, my master is "+config.botMaster+".");
+      	bot.say(to, "I am "+config.nick+". I am an IRC bot in Node.JS, my master is "+config.botMaster+".");
       	if (from == config.botMaster)
       	{
-      	  bot.say(config.channel[0], "Commands: time, execute, logout");
+      	  bot.say(to, "Commands: time, execute, logout");
       	} else {
-      	  bot.say(config.channel[0], "Commands: time, execute");
+      	  bot.say(to, "Commands: time, execute");
       	}
       }
   });	

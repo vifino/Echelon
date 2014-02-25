@@ -29,7 +29,7 @@ function Init(bot, config) {
 		if (reply && text.toLowerCase().indexOf(config.nick.toLowerCase())!=-1)
 		{
 			var randNumber = Math.floor(Math.random()*replies.length);
-			bot.say(config.channel[0], replies[randNumber] + ", " + from + ".");
+			bot.say(to, replies[randNumber] + ", " + from + ".");
 		}
 	});
 }
