@@ -16,7 +16,7 @@ If you want to develop your own Module, just make a file with the ".js" extensio
       - The one who issued the command.
       
     2. to
-      - The one who received the message. This should be the Bot's Name if the bot received a private message.
+      - The one who received the message. This should be the Bot's Name if the bot received a private message or the channel.
     3. bot
       - This is the IRC Object. issue normal IRC commands.
     4. config
