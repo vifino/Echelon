@@ -10,8 +10,8 @@ If you want to develop your own Module, just make a file with the ".js" extensio
   The "start" function should be your initialisation of things you need, because when the module is not used, it shouldn't
   do anything. The "start" function has the same arguments as the execute function and only gets called once.
   
-2. ( Optional )  execute(from,to,bot,config,echexecargs)
-  The "execute" function is your main action. It has five arguments:
+2. ( Optional )  execute(from,to,msgto,bot,config,echexecargs)
+  The "execute" function is your main action. It has six arguments:
     1. from
       - The one who issued the command.
       
