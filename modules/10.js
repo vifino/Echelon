@@ -51,8 +51,6 @@ function start(From, to,msgto , bot, config, echexecargs) {
 
 function AskQuestion(bot, msgto)
 {
-    bot.say(msgto,"Insert question here")
-    /*
     if (questions<=0) {
         bot.say(msgto,"Damn it, I lose!");
         GameStarted=false;
@@ -74,7 +72,7 @@ function AskQuestion(bot, msgto)
                 bot.say(msgto, "Question "+questions+": Is your number over "+lastvalue+"?");
             }
         }
-    }*/
+    }
 }
 
 function execute(from,to,msgto,bot,config,echexecargs) {
