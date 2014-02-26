@@ -1,10 +1,11 @@
 //help function
 //Usage: [nick] help
 //Displays help about the bot
-var msgto;
+
 function initHelp(bot, config) {
 	console.log("Adding listener for help.js");
 	bot.addListener("message", function(from, to, text, message) {
+		var msgto;
 		if (to != config.nick) msgto=to; else msgto=from;
 		if (text.toLowerCase() == config.nick.toLowerCase() + " help")
 		{
