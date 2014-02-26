@@ -17,20 +17,9 @@ function start(from, to,msgto , bot, config, echexecargs) {
             var No=(text.toLowerCase().indexOf("no")>-1);
             if (Yes != No) //XOR
             {
-                var IsLower = (lastvalue<Min+((Max-Min)/2));
-                if (lastquestion==0)
-                {
-                    if (IsLower)
-                    {
-                        if (Yes) Max=lastvalue;
-                        if (No) Min=lastvalue;
-                    }
-                } else if (lastquestion==1) {
-                    if (IsLower)
-                    {
-                        if (Yes) Min=lastvalue;
-                        if (No) Max=lastvalue;
-                    }
+                if (lastquestion==1) {
+                    if (Yes) Min=lastvalue;
+                    if (No) Max=lastvalue;
                 } else if (lastquestion==2) {
                     if (Yes)
                     {
@@ -45,13 +34,19 @@ function start(from, to,msgto , bot, config, echexecargs) {
             { //Debug
                 bot.say(msgto, "Your number is between "+Min+" and "+Max+".");
             };
+            if (Min==Max)
+            {
+                bot.say(msgto, "You're cheating");
+                GameStarted=false;
+                Player="";
+            }
         };
     });
 };
 
 function AskQuestion(bot, msgto)
 {
-    if (questions<=0) {
+    if (questions<=1) {
         bot.say(msgto,"Damn it, I lose!");
         GameStarted=false;
     } else {
@@ -62,15 +57,9 @@ function AskQuestion(bot, msgto)
             lastvalue = Math.floor((Math.random()*(Max-Min))+Min);
             bot.say(msgto,"Question "+questions+": Is your number "+lastvalue+"?");
         } else {
-            lastquestion = Math.round(Math.random());
-            if (lastquestion==0)
-            {
-                lastvalue = Math.floor((Math.random()*((Max*0.5)-Min))+Min);
-                bot.say(msgto,"Question "+questions+": Is your number under "+lastvalue+"?");
-            } else {
-                lastvalue = Math.floor((Math.random()*(Max-(Min*0.5)))+(Min*0.5));
-                bot.say(msgto, "Question "+questions+": Is your number over "+lastvalue+"?");
-            }
+            lastquestion=1;
+            lastvalue = Math.floor((Math.random()*(Max-Min))+Min);
+            bot.say(msgto,"Question "+questions+": Is your number over "+lastvalue+"?");
         }
     }
 }
