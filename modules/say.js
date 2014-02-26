@@ -3,7 +3,6 @@
 
 function initSay(bot, config)
 {
-	console.log("Adding listener for say");
 	bot.addListener("message", function(from, to, text, message) {
 		var msgto;
 		if (to != config.nick) msgto=to; else msgto=from;
