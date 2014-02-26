@@ -15,7 +15,6 @@ var listenfor = [
 ]
 
 function Init(bot, config) {
-	console.log("Adding listener for rude.js");
 	bot.addListener("message", function(from, to, text, message) {
 		var msgto;
 		if (to != config.nick) msgto=to; else msgto=from;
