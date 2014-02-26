@@ -3,16 +3,18 @@
 //Hello!
 
 var Replylist = [
-  "Hello",
-  "Hi",
-  "Greetings"
+  " Hello",
+  " Hi",
+  " Greetings",
+  " Ohia"
 ];
 
 var listenfor = ["hello","hi","hey","sup"]
-var msgto;
+
 function helloInit(bot, config) {
 	console.log("Adding listener for hello.js");
 	bot.addListener("message", function(from, to, text, message) {
+		var msgto;
 		if (to != config.nick) msgto=to; else msgto=from;
 		var NickIndex=text.toLowerCase().indexOf(config.nick.toLowerCase());
 		var index=-1;
