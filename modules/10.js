@@ -3,13 +3,13 @@ var GameStarted=false;
 var Player="";
 var Min=0;
 var Max=100;
+var msgto;
 var lastquestion=0;
 var lastvalue=0;
 
 function start(bot,config) {
     // Do your setup here
     bot.addListener("message", function(from, to, text, message) {
-        var msgto;
         if (to != config.nick) msgto=to; else msgto=from;
         if (GameStarted && from==Player)
         {
