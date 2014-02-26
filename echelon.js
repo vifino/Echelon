@@ -203,7 +203,7 @@ else {
 		}
 		else if (text.substring(0,7).toLowerCase() == "execute")
 		{
-			var echexec = text.substring(7); //.toLowerCase();
+			var echexec = text.substring(8); //.toLowerCase();
 			var echexecargs = echexec.split(" ");
 			console.log(from +" tried to execute " + echexec.toLowerCase());
 			if (text.length==(7) || echexecargs[0] == "modules") {
