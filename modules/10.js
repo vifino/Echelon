@@ -3,13 +3,13 @@ var GameStarted=false;
 var Player="";
 var Min=0;
 var Max=100;
-var msgto;
 var lastquestion=0;
 var lastvalue=0;
 
 function start(bot,config) {
     // Do your setup here
     bot.addListener("message", function(from, to, text, message) {
+        var msgto;
         if (to != config.nick) msgto=to; else msgto=from;
         if (GameStarted && from==Player)
         {
@@ -51,6 +51,8 @@ function start(bot,config) {
 
 function AskQuestion(bot, msgto)
 {
+    bot.say(msgto,"Insert question here")
+    /*
     if (questions<=0) {
         bot.say(msgto,"Damn it, I lose!");
         GameStarted=false;
@@ -72,7 +74,7 @@ function AskQuestion(bot, msgto)
                 bot.say(msgto, "Question "+questions+": Is your number over "+lastvalue+"?");
             }
         }
-    }
+    }*/
 }
 
 function execute(from,to,msgto,bot,config,echexecargs) {
