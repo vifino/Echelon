@@ -9,7 +9,8 @@ function execute(from,to,msgto,bot,config,echexecargs) {
 	console.log("from: "+ from);
 	console.log("to: " + to);
 	console.log("MSG: "+ msgto);
-	bot.say(to, "Hi I'm the Test Module! My Owner is " + config.botMaster + "." );
+	bot.say(msgto, "Hi I'm the Test Module!" );
+	bot.say(msgto, "Master[" + config.botMaster + "], from["+from+"], "+"to["+to+"], "+"msgto["+msgto+"]" );
 }
 exports.start = start;
 exports.execute = execute;
