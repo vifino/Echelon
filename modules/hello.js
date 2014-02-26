@@ -6,10 +6,16 @@ var Replylist = [
   "Hello",
   "Hi",
   "Greetings",
-  "Ohia"
+  "Ohia",
+  "Hai",
+  "Erm, Hello",
+  "I didn't know you were here",
+  "Heyho",
+  "Sup";
+  "Nice to meet you"
 ];
 
-var listenfor = ["hello","hi","hey","sup", "ohia"]
+var listenfor = ["hello","hi","hey","sup", "ohia", "heyho","hai"]
 
 function helloInit(bot, config) {
 	console.log("Adding listener for hello.js");
