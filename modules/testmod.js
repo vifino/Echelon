@@ -8,6 +8,7 @@ function execute(from,to,msgto,bot,config,echexecargs) {
 	console.log("testmod called");
 	console.log("from: "+ from);
 	console.log("to: " + to);
+	console.log("MSG: "+ msgto);
 	bot.say(to, "Hi I'm the Test Module! My Owner is " + config.botMaster + "." );
 }
 exports.start = start;
