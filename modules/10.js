@@ -5,6 +5,7 @@ var Min=0;
 var Max=100;
 var lastquestion=0;
 var lastvalue=0;
+var Timeout;
 
 function start(from, to,msgto , bot, config, echexecargs) {
     // Do your setup here
@@ -69,13 +70,20 @@ function AskQuestion(bot, msgto)
 
 function execute(from,to,msgto,bot,config,echexecargs) {
     console.log("10.js started by "+from);
-    questions=10;
-    Min=0;
-    Max=100;
-    bot.say(msgto, from +", think of a number between 0 and 100. I will then try to guess it in "+questions+" questions.");
-    GameStarted=true;
-    Player=from;
-    AskQuestion(bot, msgto);
+    var date = new Date();
+    if (!GameStarted || from == Player || date>Timeoue)
+    {
+        questions=10;
+        Min=0;
+        Max=100;
+        bot.say(msgto, from +", think of a number between 0 and 100. I will then try to guess it in "+questions+" questions.");
+        GameStarted=true;
+        var Timeout = new Date(date.getTime() + (60*60000));
+        Player=from;
+        AskQuestion(bot, msgto);
+    } else {
+        bot.say(msgto,"I am currently in a game with "+Player+". Game expires in "+current_min + ":" + current_sec)
+    }
 };
 
 exports.start = start;
