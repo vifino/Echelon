@@ -34,7 +34,7 @@ function Init(bot, config) {
 	});
 }
 
-function start(from, to, bot, config, echexecargs) {
+function start(from, to,msgto , bot, config, echexecargs) {
 	console.log("Insult.js started manually");
 	Init(bot, config);
 }

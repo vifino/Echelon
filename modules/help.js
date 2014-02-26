@@ -20,7 +20,7 @@ function initHelp(bot, config) {
   });	
 }
 	  
-function start(from,to,bot,config,echexecargs) {
+function start(from,to,msgto,bot,config,echexecargs) {
   console.log("help.js started manually");
   initHelp(bot, config);
 }

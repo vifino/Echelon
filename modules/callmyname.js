@@ -23,7 +23,7 @@ function init(bot,config) {
   });
 }
 
-function start(from,to,bot,config,echexecargs) {
+function start(from,to,msgto,bot,config,echexecargs) {
   console.log("callmyname.js started manually");
   init(bot,config);
 }

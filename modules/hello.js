@@ -33,7 +33,7 @@ function helloInit(bot, config) {
   });
 }
 
-function start(from,to,bot,config,echexecargs) {
+function start(from,to,msgto,bot,config,echexecargs) {
   console.log("Hello started manually");
   helloInit(bot, config);
 }

@@ -58,7 +58,7 @@ function expression (str) {
     return expr;
 }
 
-function start(from,to,bot,config,echexecargs) {
+function start(from,to,msgto,bot,config,echexecargs) {
   console.log("Calculator started manually");
   init(bot, config);
 }

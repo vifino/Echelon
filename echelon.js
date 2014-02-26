@@ -15,6 +15,7 @@ var currentfilewoext;
 var currentmoduleauto;
 var files;
 var bot;
+var msgto;
 function spawnBot() {
 	bot = new irc.Client(config.server, config.nick, {
 		channels: config.channel,
@@ -141,12 +142,19 @@ function basicMessage(from, to, text, message) {
 				if (modulenames[modulecount2] == echexecargs[0]) {
 					modulevalid = 1;
 					if (!modulestarted[echexecargs[0]]) {
-						modules[echexecargs[0]].start(from,to,bot,config,echexecargs);
+						if (to==config.nick) {
+							//PM
+							msgto=from;
+						}
+						else {
+							msgto=to;
+						};
+						modules[echexecargs[0]].start(from,to,msgto,bot,config,echexecargs);
 						modulestarted[echexecargs[0]] = true;
 					}
 					// console.log(typeof(modules[currentfilewoext].execute));
 					if (typeof(modules[currentfilewoext].execute) == "function") {
-						modules[echexecargs[0]].execute(from,to,bot,config,echexecargs);
+						modules[echexecargs[0]].execute(from,to,msgto,bot,config,echexecargs);
 					}
 					continue;
 				};
@@ -215,12 +223,19 @@ else {
 					if (modulenames[modulecount2] == echexecargs[0]) {
 						modulevalid = 1;
 						if (!modulestarted[echexecargs[0]]) {
-							modules[echexecargs[0]].start(from,to,bot,config,echexecargs);
+							if (to==config.nick) {
+								//PM
+								msgto=from;
+								}
+							else {
+								msgto=to;
+							};
+							modules[echexecargs[0]].start(from,to,msgto,bot,config,echexecargs);
 							modulestarted[echexecargs[0]] = true;
 						}
 						// console.log(typeof(modules[currentfilewoext].execute));
 						if (typeof(modules[currentfilewoext].execute) == "function") {
-							modules[echexecargs[0]].execute(from,to,bot,config,echexecargs);
+							modules[echexecargs[0]].execute(from,to,msgto,bot,config,echexecargs);
 						}
 						continue;
 					};

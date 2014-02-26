@@ -2,7 +2,7 @@
 
 var cookies = 0;
 
-function start(from,to,bot,config,echexecargs) {
+function start(from,to,msgto,bot,config,echexecargs) {
   console.log("I hope you have cookies enabled");
   bot.say(config.channel[0], "I hope you have cookies enabled");
   bot.addListener("message", function(from, to, text, message) {
