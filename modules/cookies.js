@@ -4,14 +4,14 @@ var cookies = 0;
 var msgto;
 function start(from,to,msgto,bot,config,echexecargs) {
   console.log("I hope you have cookies enabled");
-  bot.say(config.channel[0], "I hope you have cookies enabled");
+  bot.say(msgto, "I hope you have cookies enabled");
   bot.addListener("message", function(from, to, text, message) {
-	if (!(to == config.nick)) {
+	if (!(to==config.nick)) {
 		//Not PM
-		msgto=from;
-	}
-	else {
 		msgto=to;
+		}
+	else {
+		msgto=from;
 	};
     if (text.toLowerCase().indexOf(config.nick.toLowerCase()+ " +") == 0)
     {

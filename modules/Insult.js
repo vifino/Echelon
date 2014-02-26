@@ -19,10 +19,10 @@ function Init(bot, config) {
 	bot.addListener("message", function(from, to, text, message) {
 		if (!(to == config.nick)) {
 			//Not PM
-			msgto=from;
+			msgto=to;
 		}
 		else {
-			msgto=to;
+			msgto=from;
 		};
 		var reply=false;
 		for (var i=0;i<listenfor.length;i++)

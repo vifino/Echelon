@@ -5,13 +5,6 @@
 var msgto;
 function init(bot, config) {
   bot.addListener("message", function(from, to, text, message) {
-	if (!(to == config.nick)) {
-		//Not PM
-		msgto=from;
-	}
-	else {
-		msgto=to;
-	};
     var NickIndex = text.toLowerCase().indexOf(config.nick.toLowerCase());
     if (NickIndex==0)
     {
@@ -65,9 +58,10 @@ function expression (str) {
     return expr;
 }
 
-function start(from,to,msgto,bot,config,echexecargs) {
-  console.log("Calculator started manually");
-  init(bot, config);
+function start(from,to,msgto2,bot,config,echexecargs) {
+	console.log("Calculator started manually");
+	msgto=msgto2;
+	init(bot, config);
 }
 
 function autorun(bot, config) {

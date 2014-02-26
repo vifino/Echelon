@@ -15,13 +15,12 @@ var msgto;
 function init(bot,config) {
   console.log("Adding listener for blank.js");
   bot.addListener("message", function(from, to, text, message) {
-	if (!(to == config.nick)) {
-		//Not PM
-		msgto=from;
+	if (!(to==config.nick)) {
+		msgto=to;
 	}
 	else {
-		msgto=to;
-	};
+		msgto=from;
+	}
     if (text.toLowerCase().replace(",","").replace(".","").replace("!","") == config.nick.toLowerCase())
      {
        var randomNumber = Math.floor(Math.random()*Replylist.length);

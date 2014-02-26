@@ -79,13 +79,6 @@ function execute(from,to,msgto,bot,config,echexecargs) {
     questions=10;
     Min=0;
     Max=100;
-	if (!(to == config.nick)) {
-		//Not PM
-		msgto=from;
-	}
-	else {
-		msgto=to;
-	};
     bot.say(msgto, from +", think of a number between 0 and 100. I will then try to guess it in "+questions+" questions.");
     GameStarted=true;
     Player=msgto;

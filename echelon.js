@@ -142,13 +142,7 @@ function basicMessage(from, to, text, message) {
 				if (modulenames[modulecount2] == echexecargs[0]) {
 					modulevalid = 1;
 					if (!modulestarted[echexecargs[0]]) {
-						if (to==config.nick) {
-							//PM
-							msgto=from;
-						}
-						else {
-							msgto=to;
-						};
+						msgto = to;
 						modules[echexecargs[0]].start(from,to,msgto,bot,config,echexecargs);
 						modulestarted[echexecargs[0]] = true;
 					}
@@ -223,13 +217,7 @@ else {
 					if (modulenames[modulecount2] == echexecargs[0]) {
 						modulevalid = 1;
 						if (!modulestarted[echexecargs[0]]) {
-							if (to==config.nick) {
-								//PM
-								msgto=from;
-								}
-							else {
-								msgto=to;
-							};
+							msgto = from;
 							modules[echexecargs[0]].start(from,to,msgto,bot,config,echexecargs);
 							modulestarted[echexecargs[0]] = true;
 						}

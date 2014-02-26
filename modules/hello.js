@@ -15,10 +15,10 @@ function helloInit(bot, config) {
   bot.addListener("message", function(from, to, text, message) {
 	if (!(to == config.nick)) {
 		//Not PM
-		msgto=from;
+		msgto=to;
 	}
 	else {
-		msgto=to;
+		msgto=from;
 	};
     var NickIndex=text.toLowerCase().indexOf(config.nick.toLowerCase());
     var index=-1;
