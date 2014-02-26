@@ -1,20 +1,27 @@
 //help function
 //Usage: [nick] help
 //Displays help about the bot
-	  
+var msgto;
 function initHelp(bot, config) {
   console.log("Adding listener for help.js");
   bot.addListener("message", function(from, to, text, message) {
+	if (!(to == config.nick)) {
+		//Not PM
+		msgto=from;
+	}
+	else {
+		msgto=to;
+	};
     if (text.toLowerCase() == config.nick.toLowerCase() + " help")
       {
       	//Help function
       	console.log("Displaying help to "+from);
-      	bot.say(to, "I am "+config.nick+". I am an IRC bot in Node.JS, my master is "+config.botMaster+".");
+      	bot.say(msgto, "I am "+config.nick+". I am an IRC bot in Node.JS, my master is "+config.botMaster+".");
       	if (from == config.botMaster)
       	{
-      	  bot.say(to, "Commands: time, execute, logout");
+      	  bot.say(msgto, "Commands: time, execute, logout");
       	} else {
-      	  bot.say(to, "Commands: time, execute");
+      	  bot.say(msgto, "Commands: time, execute");
       	}
       }
   });	

@@ -13,10 +13,17 @@ var listenfor = [
 	"stfu",
 	"fuck off"
 ]
-
+var msgto;
 function Init(bot, config) {
 	console.log("Adding listener for rude.js");
 	bot.addListener("message", function(from, to, text, message) {
+		if (!(to == config.nick)) {
+			//Not PM
+			msgto=from;
+		}
+		else {
+			msgto=to;
+		};
 		var reply=false;
 		for (var i=0;i<listenfor.length;i++)
 		{
@@ -29,7 +36,7 @@ function Init(bot, config) {
 		if (reply && text.toLowerCase().indexOf(config.nick.toLowerCase())!=-1)
 		{
 			var randNumber = Math.floor(Math.random()*replies.length);
-			bot.say(to, replies[randNumber] + ", " + from + ".");
+			bot.say(msgto, replies[randNumber] + ", " + from + ".");
 		}
 	});
 }

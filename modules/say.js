@@ -1,13 +1,20 @@
 //Say function
 //Usage: [nick] say [msg]
-
+var msgto;
 function initSay(bot, config)
 {
     console.log("Adding listener for say");
   bot.addListener("message", function(from, to, text, message) {
+	if (!(to == config.nick)) {
+		//Not PM
+		msgto=from;
+	}
+	else {
+		msgto=to;
+	};
     if(text.toLowerCase().indexOf(config.nick.toLowerCase()+" say ") == 0)
     {
-      bot.say(to, text.replace(",","").replace(":","").substring((config.nick+" say ").length,text.length));
+      bot.say(msgto, text.replace(",","").replace(":","").substring((config.nick+" say ").length,text.length));
     };
   });
 }

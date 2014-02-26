@@ -1,3 +1,5 @@
+// A basic TestModule
+var msgto;
 function start() {
 // Do your setup here
 }

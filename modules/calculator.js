@@ -2,14 +2,21 @@
 //Usage: [nick] * [number] [operator] [number]
 //Crunches numbers into a calculator
 //Example: "Echelon, what is 5 * 2?" - " 10! "
-
+var msgto;
 function init(bot, config) {
   bot.addListener("message", function(from, to, text, message) {
+	if (!(to == config.nick)) {
+		//Not PM
+		msgto=from;
+	}
+	else {
+		msgto=to;
+	};
     var NickIndex = text.toLowerCase().indexOf(config.nick.toLowerCase());
     if (NickIndex==0)
     {
       var input=text.toLowerCase().replace(config.nick.toLowerCase(),"").replace(",","").replace(":","").replace("!","").replace("?","");
-      bot.say(to, expression(input));
+      bot.say(msgto, expression(input));
     };
   });
 }
