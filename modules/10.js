@@ -6,7 +6,7 @@ var Max=100;
 var lastquestion=0;
 var lastvalue=0;
 
-function start(From, to,msgto , bot, config, echexecargs) {
+function start(from, to,msgto , bot, config, echexecargs) {
     // Do your setup here
     bot.addListener("message", function(from, to, text, message) {
         var msgto;
