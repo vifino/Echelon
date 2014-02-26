@@ -28,18 +28,21 @@ function start(from, to,msgto , bot, config, echexecargs) {
                         Player="";
                     };
                 };
-                AskQuestion(bot, msgto);
+                if (Min==Max)
+                {
+                    bot.say(msgto, "You're cheating");
+                    GameStarted=false;
+                    Player="";
+                }
+                if (GameStarted)
+                {
+                    AskQuestion(bot, msgto);
+                }
             };
             if (text.toLowerCase().indexOf("debug")>-1)
             { //Debug
                 bot.say(msgto, "Your number is between "+Min+" and "+Max+".");
             };
-            if (Min==Max)
-            {
-                bot.say(msgto, "You're cheating");
-                GameStarted=false;
-                Player="";
-            }
         };
     });
 };
