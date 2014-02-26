@@ -57,7 +57,7 @@ function AskQuestion(bot, msgto)
     } else {
         questions-=1;
         
-        if (Math.abs(max-min)<5 || questions<2) { //Take a guess
+        if (Math.abs(Max-Min)<5 || questions<2) { //Take a guess
             lastquestion=2;
             lastvalue = Math.floor((Math.random()*(Max-Min))+Min);
             bot.say(msgto,"Question "+questions+": Is your number "+lastvalue+"?");
