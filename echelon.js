@@ -61,8 +61,8 @@ function loadModules() {
 			modulestarted[currentfilewoext] = false;
 		};
 		modulesloaded = true;
-};	
-console.log("Finished Loading Modules.");
+	};	
+	console.log("Finished Loading Modules.");
 };
 // Finished Loading of modules.
 
@@ -87,6 +87,7 @@ function basicJoin(channel, who) {
 };
 
 function basicMessage(from, to, text, message) {
+	if ( !(to == config.nick) ) {
 	if (text.toLowerCase() == config.nick.toLowerCase() + " time")
 	{
 		console.log("User " + from + " Requested Time.");
@@ -95,20 +96,20 @@ function basicMessage(from, to, text, message) {
 		var current_min = date.getMinutes();
 		var current_sec = date.getSeconds();
 		
-		bot.say(from ,"Current Time: " + current_hour + ":" + current_min + ":" + current_sec);
+		bot.say(to ,"Current Time: " + current_hour + ":" + current_min + ":" + current_sec);
 	}
 	else if (text.toLowerCase() == config.nick.toLowerCase() + " logout")
 	{
 		console.log(from +" requested logout.")
 		if (from == config.botMaster) {
 			console.log("Request granted.");
-			bot.say(from , "Request granted.");
+			bot.say(to , "Request granted.");
 			bot.disconnect("Disconnecting on Admin request.");
 		}
 		else
 		{
 			console.log("Request denied.");
-			bot.say(from , "Request denied.");
+			bot.say(to , "Request denied.");
 		};
 	}
 	else if (text.toLowerCase() == config.nick.toLowerCase() + " restart")
@@ -116,7 +117,7 @@ function basicMessage(from, to, text, message) {
 		console.log(from +" requested restart..");
 		if (from == config.botMaster) {
 			console.log("Request granted.");
-			bot.say(from , "Request granted.");
+			bot.say(to , "Request granted.");
 			bot.disconnect("Restarting on Admin request.");
 			start()
 		}
@@ -132,7 +133,7 @@ function basicMessage(from, to, text, message) {
 		var echexecargs = echexec.split(" ");
 		console.log(from +" tried to execute " + echexec.toLowerCase());
 		if (text.length==(8 + config.nick.length) || echexecargs[0] == "modules") {
-			bot.say(from , "Modules ("+modulenames.length+"): " +modulenames.toString());
+			bot.say(to , "Modules ("+modulenames.length+"): " +modulenames.toString());
 		}
 		else {
 			var modulevalid = 0;
@@ -160,6 +161,81 @@ function basicMessage(from, to, text, message) {
 		console.log(from + " => "+ to + ":" + text);
 	};
 }
+else {
+	if (text.toLowerCase() == "time")
+		{
+			console.log("User " + from + " Requested Time.");
+			var date = new Date();
+			var current_hour = date.getHours();
+			var current_min = date.getMinutes();
+			var current_sec = date.getSeconds();
+			
+			bot.say(from ,"Current Time: " + current_hour + ":" + current_min + ":" + current_sec);
+		}
+		else if (text.toLowerCase() == "logout")
+		{
+			console.log(from +" requested logout.")
+			if (from == config.botMaster) {
+				console.log("Request granted.");
+				bot.say(from , "Request granted.");
+				bot.disconnect("Disconnecting on Admin request.");
+			}
+			else
+			{
+				console.log("Request denied.");
+				bot.say(from , "Request denied.");
+			};
+		}
+		else if (text.toLowerCase() == "restart")
+		{
+			console.log(from +" requested restart..");
+			if (from == config.botMaster) {
+				console.log("Request granted.");
+				bot.say(from , "Request granted.");
+				bot.disconnect("Restarting on Admin request.");
+				start()
+			}
+			else
+			{
+				console.log("Request denied.");
+				bot.say(from , "Request denied.");
+			};
+		}
+		else if (text.substring(0,7).toLowerCase() == "execute")
+		{
+			var echexec = text.substring(7); //.toLowerCase();
+			var echexecargs = echexec.split(" ");
+			console.log(from +" tried to execute " + echexec.toLowerCase());
+			if (text.length==(7) || echexecargs[0] == "modules") {
+				bot.say(from , "Modules ("+modulenames.length+"): " +modulenames.toString());
+			}
+			else {
+				var modulevalid = 0;
+				for(var modulecount2 in modulenames){
+					if (modulenames[modulecount2] == echexecargs[0]) {
+						modulevalid = 1;
+						if (!modulestarted[echexecargs[0]]) {
+							modules[echexecargs[0]].start(from,to,bot,config,echexecargs);
+							modulestarted[echexecargs[0]] = true;
+						}
+						// console.log(typeof(modules[currentfilewoext].execute));
+						if (typeof(modules[currentfilewoext].execute) == "function") {
+							modules[echexecargs[0]].execute(from,to,bot,config,echexecargs);
+						}
+						continue;
+					};
+				};
+				if (modulevalid == 0) {
+					console.log("Invalid module.");
+					bot.say(from , "'"+echexec.toLowerCase()+ "' is not a valid module. Use 'execute modules' for a list of modules.");
+				};
+			};
+		}
+		else {
+			console.log(from + " => "+ to + ":" + text);
+		};
+	};
+};
 function waitforVarTrue(variable, callback, arg1) {
 	if(bot== false) {
 			        setTimeout(waitforVarTrue(variable, callback), 50);
