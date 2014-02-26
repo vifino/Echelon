@@ -76,13 +76,13 @@ function AskQuestion(bot, msgto)
 }
 
 function execute(from,to,msgto,bot,config,echexecargs) {
-    console.log("10.js started");
+    console.log("10.js started by "+from);
     questions=10;
     Min=0;
     Max=100;
     bot.say(msgto, from +", think of a number between 0 and 100. I will then try to guess it in "+questions+" questions.");
     GameStarted=true;
-    Player=msgto;
+    Player=from;
     AskQuestion();
 };
 
