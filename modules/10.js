@@ -9,43 +9,44 @@ var lastvalue=0;
 function start() {
     // Do your setup here
     bot.addListener("message", function(from, to, text, message) {
-    if (to != config.nick) msgto=to; else msgto=from;
-    if (GameStarted && msgto==Player)
-    {
-        var Yes=(text.toLowerCase().indexOf("yes")>-1);
-        var No=(text.toLowerCase().indexOf("no")>-1);
-        if (Yes != No) //XOR
+        var msgto;
+        if (to != config.nick) msgto=to; else msgto=from;
+        if (GameStarted && msgto==Player)
         {
-            var IsLower = (lastvalue<Min+((Max-Min)/2));
-            if (lastquestion==0)
+            var Yes=(text.toLowerCase().indexOf("yes")>-1);
+            var No=(text.toLowerCase().indexOf("no")>-1);
+            if (Yes != No) //XOR
             {
-                if (IsLower)
+                var IsLower = (lastvalue<Min+((Max-Min)/2));
+                if (lastquestion==0)
                 {
-                    if (Yes) Max=lastvalue;
-                    if (No) Min=lastvalue;
-                }
-            } else if (lastquestion==1) {
-                if (IsLower)
-                {
-                    if (Yes) Min=lastvalue;
-                    if (No) Max=lastvalue;
-                }
-            } else if (lastquestion==2) {
-                if (Yes)
-                {
-                    bot.say(msgto , "Yay, I win.");
-                    GameStarted=false;
-                    Player="";
+                    if (IsLower)
+                    {
+                        if (Yes) Max=lastvalue;
+                        if (No) Min=lastvalue;
+                    }
+                } else if (lastquestion==1) {
+                    if (IsLower)
+                    {
+                        if (Yes) Min=lastvalue;
+                        if (No) Max=lastvalue;
+                    }
+                } else if (lastquestion==2) {
+                    if (Yes)
+                    {
+                        bot.say(msgto , "Yay, I win.");
+                        GameStarted=false;
+                        Player="";
+                    };
                 };
+                AskQuestion(bot, msgto);
             };
-            AskQuestion(bot, msgto);
+            if (text.toLowerCase().indexOf("debug")>-1)
+            { //Debug
+                bot.say(msgto, "Your number is between "+Min+" and "+Max+".");
+            };
         };
-        if (text.toLowerCase().indexOf("debug")>-1)
-        { //Debug
-            bot.say(msgto, "Your number is between "+Min+" and "+Max+".");
-        };
-    };
-});
+    });
 };
 
 function AskQuestion(bot, msgto)
