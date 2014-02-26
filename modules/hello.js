@@ -8,11 +8,12 @@ var Replylist = [
   "Greetings",
   "Ohia",
   "Hai",
-  "Erm, Hello",
-  "I didn't know you were here",
+  "Oh, Hello",
   "Heyho",
   "Sup",
-  "Nice to meet you"
+  "Nice to meet you",
+  "What's up, ",
+  "Why hello there, "
 ];
 
 var listenfor = ["hello","hi","hey","sup","ohia","heyho","hai"]
