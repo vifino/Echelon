@@ -1,7 +1,6 @@
 var questions;
 var GameStarted=false;
 var Player="";
-var msgto;
 var Min=0;
 var Max=100;
 var lastquestion=0;
@@ -10,6 +9,7 @@ var lastvalue=0;
 function start() {
     // Do your setup here
     bot.addListener("message", function(from, to, text, message) {
+    if (to != config.nick) msgto=to; else msgto=from;
     if (GameStarted && msgto==Player)
     {
         var Yes=(text.toLowerCase().indexOf("yes")>-1);
@@ -38,7 +38,7 @@ function start() {
                     Player="";
                 };
             };
-            AskQuestion();
+            AskQuestion(bot, msgto);
         };
         if (text.toLowerCase().indexOf("debug")>-1)
         { //Debug
@@ -48,7 +48,7 @@ function start() {
 });
 };
 
-function AskQuestion()
+function AskQuestion(bot, msgto)
 {
     if (questions<=0) {
         bot.say(msgto,"Damn it, I lose!");
