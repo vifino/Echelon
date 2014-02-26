@@ -11,7 +11,7 @@ function start() {
     bot.addListener("message", function(from, to, text, message) {
         var msgto;
         if (to != config.nick) msgto=to; else msgto=from;
-        if (GameStarted && msgto==Player)
+        if (GameStarted && from==Player)
         {
             var Yes=(text.toLowerCase().indexOf("yes")>-1);
             var No=(text.toLowerCase().indexOf("no")>-1);
@@ -83,7 +83,7 @@ function execute(from,to,msgto,bot,config,echexecargs) {
     bot.say(msgto, from +", think of a number between 0 and 100. I will then try to guess it in "+questions+" questions.");
     GameStarted=true;
     Player=from;
-    AskQuestion();
+    AskQuestion(bot, msgto);
 };
 
 exports.start = start;
