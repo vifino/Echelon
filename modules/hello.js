@@ -11,11 +11,11 @@ var Replylist = [
   "Erm, Hello",
   "I didn't know you were here",
   "Heyho",
-  "Sup";
+  "Sup",
   "Nice to meet you"
 ];
 
-var listenfor = ["hello","hi","hey","sup", "ohia", "heyho","hai"]
+var listenfor = ["hello","hi","hey","sup","ohia","heyho","hai"]
 
 function helloInit(bot, config) {
 	console.log("Adding listener for hello.js");
