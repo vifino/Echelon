@@ -161,7 +161,7 @@ function basicMessage(from, to, text, message) {
 			};
 			if (modulevalid == 0) {
 				console.log("Invalid module.");
-				bot.say(from , "'"+echexec.toLowerCase()+ "' is not a valid module. Use 'execute modules' for a list of modules.");
+				bot.say(to , "'"+echexec.toLowerCase()+ "' is not a valid module. Use 'execute modules' for a list of modules.");
 			};
 		};
 	}
