@@ -9,7 +9,7 @@ var Replylist = [
   "Ohia"
 ];
 
-var listenfor = [" hello"," hi"," hey"," sup", " ohia"]
+var listenfor = ["hello","hi","hey","sup", "ohia"]
 
 function helloInit(bot, config) {
 	console.log("Adding listener for hello.js");
@@ -21,7 +21,7 @@ function helloInit(bot, config) {
 		for (var i=0;i<listenfor.length;i++)
 		{
 			var iof=text.toLowerCase().indexOf(listenfor[i].toLowerCase());
-			if (iof!=-1)
+			if (iof==0)
 			{
 				index=iof;
 				break;
