@@ -21,7 +21,7 @@ function start(from, to, msgto, bot, config, echexecargs) {
             {
                 if (lastquestion == 1) {
                     if (Yes) Min = lastvalue;
-                    if (No) Max = lastvalue;
+                    if (No) Max = lastvalue+1;
                 } else if (lastquestion == 2) {
                     if (Yes) {
                         bot.say(msgto, "Yay, I win.");
