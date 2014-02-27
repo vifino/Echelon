@@ -66,7 +66,7 @@ function AskQuestion(bot, msgto) {
 function execute(from, to, msgto, bot, config, echexecargs) {
     console.log("10.js started by " + from);
     var date = new Date();
-    if (!GameStarted || from == Player || date > Timeout) {
+    if (!GameStarted || date > Timeout) {
         questions = 10;
         Min = 0;
         Max = 100;
