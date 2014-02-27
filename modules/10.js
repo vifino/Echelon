@@ -73,8 +73,7 @@ function execute(from, to, msgto, bot, config, echexecargs) {
         Last = Min;
         bot.say(msgto, from + ", think of a number between 0 and 100. I will then try to guess it in " + questions + " questions.");
         GameStarted = true;
-        Timeout = date;
-        Timeout.setMinutes(Timeout.getMinutes()+1);
+        Timeout = new Date(date.getTime()+ (1000*10));
         Player = from;
         AskQuestion(bot, msgto);
     } else {
