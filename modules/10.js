@@ -49,7 +49,7 @@ function AskQuestion(bot, msgto) {
     } else {
         questions -= 1;
 
-        if (Math.abs(Max - Min) < questions || questions < 2) { //Take a guess
+        if (Math.abs(Max - Min) < questions*2 || questions < 2) { //Take a guess
             lastquestion = 2;
             if (Min>Last) Last = Min;
             lastvalue = Last;
