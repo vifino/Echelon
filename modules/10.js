@@ -29,7 +29,7 @@ function start(from, to, msgto, bot, config, echexecargs) {
                         Player = "";
                     };
                 };
-                if (Min == Max) {
+                if (Min >= Max || lastvalue>Max || lastvalue<Max) {
                     bot.say(msgto, "You're cheating");
                     GameStarted = false;
                     Player = "";
@@ -37,9 +37,6 @@ function start(from, to, msgto, bot, config, echexecargs) {
                 if (GameStarted) {
                     AskQuestion(bot, msgto);
                 }
-            };
-            if (text.toLowerCase().indexOf("debug") > -1) { //Debug
-                bot.say(msgto, "Your number is between " + Min + " and " + Max + ".");
             };
         };
     });
