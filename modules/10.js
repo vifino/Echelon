@@ -6,6 +6,7 @@ var Max = 100;
 var lastquestion = 0;
 var lastvalue = 0;
 var Timeout;
+var Last=0;
 
 function start(from, to, msgto, bot, config, echexecargs) {
     // Do your setup here
@@ -51,10 +52,12 @@ function AskQuestion(bot, msgto) {
     } else {
         questions -= 1;
 
-        if (Math.abs(Max - Min) < 5 || questions < 2) { //Take a guess
+        if (Math.abs(Max - Min) < questions || questions < 2) { //Take a guess
             lastquestion = 2;
-            lastvalue = Math.floor((Math.random() * (Max - Min)) + Min);
+            if (Min>Last) Last = Min;
+            lastvalue = Last;
             bot.say(msgto, "Question " + questions + ": Is your number " + lastvalue + "?");
+            Last+=1;
         } else {
             lastquestion = 1;
             lastvalue = Math.floor((Math.random() * (Max - Min)) + Min);
@@ -70,6 +73,7 @@ function execute(from, to, msgto, bot, config, echexecargs) {
         questions = 10;
         Min = 0;
         Max = 100;
+        Last = Min;
         bot.say(msgto, from + ", think of a number between 0 and 100. I will then try to guess it in " + questions + " questions.");
         GameStarted = true;
         var Timeout = new Date(date.getTime() + (60 * 60000));
