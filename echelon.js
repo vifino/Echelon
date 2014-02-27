@@ -35,9 +35,15 @@ var modulestarted = [];
 // Load Additional Modules.
 function loadModules() {
 	console.log("Searching and loading Modules.");
+	files = [];
 	files = fs.readdirSync("./modules");
+	modules = [];
 	modulenames = [];
+	currentmodule;
+	currentmoduleauto;
 	modulesloaded = false;
+	currentfilewoext;
+	currentfile;
 	for(var filecount in files){
 	if (!files.hasOwnProperty(filecount)) continue;
 		modulestotal = modulestotal + 1;
