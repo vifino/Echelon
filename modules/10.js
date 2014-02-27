@@ -29,7 +29,7 @@ function start(from, to, msgto, bot, config, echexecargs) {
                         Player = "";
                     };
                 };
-                if (Min >= Max || lastvalue>Max || lastvalue<Max) {
+                if (Min >= Max || lastvalue>Max || lastvalue<Min) {
                     bot.say(msgto, "You're cheating");
                     GameStarted = false;
                     Player = "";
