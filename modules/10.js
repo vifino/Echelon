@@ -73,12 +73,12 @@ function execute(from, to, msgto, bot, config, echexecargs) {
         Last = Min;
         bot.say(msgto, from + ", think of a number between 0 and 100. I will then try to guess it in " + questions + " questions.");
         GameStarted = true;
-        var Timeout = new Date(date.getTime() + (60 * 60000));
+        Timeout = new Date(date);
+        Timeout.setMinutes(Timeout.getMinutes()+1);
         Player = from;
         AskQuestion(bot, msgto);
     } else {
-        var GetTime = new Date(Timeout-date);
-        bot.say(msgto, "I am currently in a game with " + Player + ". The game will expire in "+GetTime.getMinutes()+":"+GetTime.getSeconds())
+        bot.say(msgto, "I am currently in a game with " + Player + ". The game will expire in 1 minute")
     }
 };
 
