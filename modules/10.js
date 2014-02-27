@@ -77,8 +77,8 @@ function execute(from, to, msgto, bot, config, echexecargs) {
         Player = from;
         AskQuestion(bot, msgto);
     } else {
-        var GetTime = Timeout-date;
-        bot.say(msgto, "I am currently in a game with " + Player + ". The game will expire in "+GetTime.getSeconds()+":"+GetTime.getMinutes())
+        var GetTime = new Date(Timeout-date);
+        bot.say(msgto, "I am currently in a game with " + Player + ". The game will expire in "+GetTime.getMinutes()+":"+GetTime.getSeconds())
     }
 };
 
