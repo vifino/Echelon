@@ -42,15 +42,14 @@ function setupLua(bot, config) {
 function runLuaCMD(to, bot, command) {
 	try	{
 		lua.doStringSync(
-	        "debug.sethook(function() error(\"Quota exceeded\", 3) end, \"\", 500000) ;" +
-	        "print = function(str) return nativeP(\"" + to + "\", str) end ;" +
-			"os.exit = function() return nope(\"" + to + "\") end ;" +
-			"os.execute = function() return nope(\"" + to + "\") end ;" +
-			"os.remove = function() return nope(\"" + to + "\") end ;" +
-			"os.rename = function() return nope(\"" + to + "\") end ;" +
-			"nick = \”" + botconf.nick + "\” ;" +
-			"to = \”" + to + "\” ;" +
-			"io = nil; require = nil; module = nil; dofile = nil; loadfile = nil; debug = nil;"
+	        
+	       "debug.sethook(function() error(\"Quota exceeded\", 3) end, \"\", 500000) " +
+      	   "print = function(str) return nativeP(\"" + to + "\", str) end " +
+			"os.exit = function() return nope(\"" + to + "\") end " +
+			"os.execute = function() return nope(\"" + to + "\") end " +
+			"os.remove = function() return nope(\"" + to + "\") end " +
+			"os.rename = function() return nope(\"" + to + "\") end " +
+			"io = nil; require = nil; module = nil; dofile = nil; loadfile = nil;"
 	    );
 	} catch (err) {
 		// bot.say(to, "Lua Crashed, making State Reset...");
