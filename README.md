@@ -37,4 +37,15 @@ If you want to develop your own Module, just make a file with the ".js" extensio
 Requirements:
  - A *NIX OS, maybe CygWin works, not confirmed
  - GNU Screen installed
+ - github installed ( git )
  - Node.JS, the Node-IRC Module and the Underscore-Module.
+
+- Special NodeLua Module
+  Echelon uses a special build of nodelua to fix some evil bugs and do some epic stuff.
+  To get that module, you have to go to your node module directory ( Mostly ~/node_modules/ ) and execute this command:
+  - "git clone https://github.com/Sorroko/NodeLua.git nodelua"
+  After that, you have to cd in to the directory:
+  - "cd nodelua"
+  Then we need to install the module:
+  - "npm install"
+  You should be done now.
