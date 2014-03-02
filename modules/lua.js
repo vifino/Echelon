@@ -48,6 +48,7 @@ function runLuaCMD(to, bot, command) {
 			"os.exit = function() return nope(\"" + to + "\") end " +
 			"os.execute = function() return nope(\"" + to + "\") end " +
 			"os.remove = function() return nope(\"" + to + "\") end " +
+			"os.rename = function() return nope(\"" + to + "\") end " +
 			"io = nil; require = nil; module = nil; dofile = nil; loadfile = nil;"
 	    );
 	} catch (err) {
