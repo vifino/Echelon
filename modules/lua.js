@@ -1,30 +1,54 @@
+// Lua Module
+// It requires nodelua to be installed, or it will fail.
+
+var lua;
+var printAllowed = true;
 var nodelua = require("nodelua");
 function setupLua(bot, config) {
-	var lua = new nodelua.LuaState("lua");
-	lua.registerFunction('nativeP', function(to, str){
-                bot.say(to, "> "  + str);
+	lua = new nodelua.LuaState("lua");
+	lua.registerFunction("nativeP", function(to, str){
+				if (printAllowed) {
+                	bot.say(to, "> "  + str);
+				}
+				else {
+					printAllowed = true;
+				}
     });
-    lua.registerFunction('sayIRC', function(user, message){
-                client.say(user, message);
+    lua.registerFunction("sayIRC", function(user, message){
+                bot.say(user, message);
     });
+	lua.registerFunction("actionIRC", function(channel, message) {
+				bot.action(channel, message);
+	});
+	lua.registerFunction("joinIRC", function(channel) {
+				bot.join(channel);
+	});
+	lua.registerFunction("partIRC", function(channel) {
+				bot.part(channel);
+	});
+	lua.registerFunction("resetLua", function() {
+				printAllowed = false;
+				setupLua(bot, config);
+	});
 }
 
-function runLuaCMD(command) {
+function runLuaCMD(to, bot, command) {
 	lua.doStringSync(
         "debug.sethook(function() error(\"Quota exceeded\", 3) end, \"\", 500000) " +
         "print = function(str) return nativeP(\"" + to + "\", str) end "
     );
     var ret_value, error;
 	try {
-        ret_value = lua.doStringSync(strLua);
+        ret_value = lua.doStringSync(command);
     } catch (err) {
         error = err;
         console.log("Error " + err);
     }
     if (ret_value) {
-        client.say(to, "> " + ret_value[i]);
+        bot.say(to, "> " + ret_value);
     } else if (error) {
-        client.say(to, "> "  + error);
+        bot.say(to, "> "  + error);
+		error;
     }
 }
 
@@ -37,11 +61,17 @@ function autoload(bot,config) {
 	setupLua(bot, config);
 	bot.addListener("message", function(from, to, text, message){
 		if (text.startsWith("->")) {
-			var luaStr = message.substring(2).trim();
-			runLuaCMD(luaStr);
+			var msgto;
+			if (to != config.nick) msgto=to; else msgto=from;
+			var luaStr = text.substring(2).trim();
+			runLuaCMD(msgto, bot, luaStr);
 		};
 
 	});
+}
+
+String.prototype.startsWith = function(prefix) { // Thanks again Sorroko!
+        return this.indexOf(prefix) === 0;
 }
 
 function execute() {
