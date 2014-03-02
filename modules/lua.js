@@ -3,8 +3,12 @@
 
 var lua;
 var printAllowed = true;
-var nodelua = require("nodelua");
+var nodelua;
+var botconf;
+var ret_value, error;
+var err_length;
 function setupLua(bot, config) {
+	nodelua = require("nodelua");
 	lua = new nodelua.LuaState("lua");
 	lua.registerFunction("nativeP", function(to, str){
 				if (printAllowed) {
@@ -30,26 +34,43 @@ function setupLua(bot, config) {
 				printAllowed = false;
 				setupLua(bot, config);
 	});
+	lua.registerFunction("nope", function(to) {
+				bot.say(to, "Nope!")
+	});
 }
 
 function runLuaCMD(to, bot, command) {
-	lua.doStringSync(
-        "debug.sethook(function() error(\"Quota exceeded\", 3) end, \"\", 500000) " +
-        "print = function(str) return nativeP(\"" + to + "\", str) end "
-    );
+	if (command.indexOf("debug.sethook") == -1) {
+	try	{
+		lua.doStringSync(
+	        "debug.sethook(function() error(\"Quota exceeded\", 3) end, \"\", 500000) " +
+	        "print = function(str) return nativeP(\"" + to + "\", str) end " +
+			"os.exit = function() return nope(\"" + to + "\") end " +
+			"os.execute = function() return nope(\"" + to + "\") end " +
+			"os.remove = function() return nope(\"" + to + "\") end " +
+			"io = nil; require = nil; module = nil; dofile = nil; loadfile = nil;"
+	    );
+	} catch (err) {
+		// bot.say(to, "Lua Crashed, making State Reset...");
+		setupLua(bot, botconf);
+	}
+	ret_value;
     var ret_value, error;
 	try {
         ret_value = lua.doStringSync(command);
     } catch (err) {
-        error = err;
-        console.log("Error " + err);
+		error = err;
+        console.log("Error " + error);
     }
     if (ret_value) {
-        bot.say(to, "> " + ret_value);
+		for (i in ret_value) {
+		   bot.say(to, "> " + ret_value[i]);
+		}
     } else if (error) {
         bot.say(to, "> "  + error);
-		error;
+
     }
+	};
 }
 
 function start(from,to,msgto,bot,config,echexecargs) {
@@ -59,6 +80,7 @@ function start(from,to,msgto,bot,config,echexecargs) {
 function autoload(bot,config) {
 	console.log("lua.js started automatically");
 	setupLua(bot, config);
+	botconf = config;
 	bot.addListener("message", function(from, to, text, message){
 		if (text.startsWith("->")) {
 			var msgto;
