@@ -22,6 +22,8 @@ function spawnBot() {
 		port: config.port,
 		realName: config.realName,
 		userName: config.nick,
+		floodProtection: true,
+	 	floodProtectionDelay: 500,
 	});
 	if (!config.pass == "") {
 		bot.say("nickserv", "identify " + config.pass);
