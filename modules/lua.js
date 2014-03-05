@@ -12,7 +12,7 @@ function setupLua(instanceName) {
 	lua[instanceName] = NaN;
 	lua[instanceName] = new nodelua.LuaState(instanceName);
 	lua[instanceName].registerFunction("nativeP", function(to, str){
-                	bot.say(to, "> "  + str);
+                bot.say(to, "> "  + str);
     });
     lua[instanceName].registerFunction("sayIRC", function(user, message){
                 bot.say(user, message);
@@ -37,14 +37,14 @@ function setupLua(instanceName) {
 
 function runLuaCMD(to, instanceName, command) {
 	try	{
-		lua.doStringSync(
+		lua[instanceName].doStringSync(
 	        
-	       "debug.sethook(function() error(\"Quota exceeded\", 3) end, \"\", 500000) " +
-      	   "print = function(str) return nativeP(\"" + to + "\", str) end " +
-			"os.exit = function() return nope(\"" + to + "\") end " +
-			"os.execute = function() return nope(\"" + to + "\") end " +
-			"os.remove = function() return nope(\"" + to + "\") end " +
-			"os.rename = function() return nope(\"" + to + "\") end " +
+	      	"debug.sethook(function() error(\"Quota exceeded\", 3) end, \"\", 500000); " +
+      	  	"print = function(str) return nativeP(\"" + to + "\", str); end; " +
+			"os.exit = function() return nope(\"" + to + "\"); end; " +
+			"os.execute = function() return nope(\"" + to + "\"); end; " +
+			"os.remove = function() return nope(\"" + to + "\"); end; " +
+			"os.rename = function() return nope(\"" + to + "\"); end; " +
 			"io = nil; require = nil; module = nil; dofile = nil; loadfile = nil;"
 	    );
 	} catch (err) {
@@ -62,7 +62,7 @@ function runLuaCMD(to, instanceName, command) {
     	var retstr = "";
 		for (i in ret_value) {
 		   retstr += ret_value[i] + "\n";
-		}
+		};
 		return retstr;
     } else if (error) {
         return error
@@ -85,7 +85,6 @@ function autoload(botorig,config) {
 			if (to != config.nick) msgto=to; else msgto=from;
 			var luaStr = text.substring(2).trim();
 			var returned = runLuaCMD(msgto, "lua", luaStr);
-			console.log(returned)
 			bot.say(msgto, returned);
 		};
 
