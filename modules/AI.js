@@ -6,7 +6,7 @@ var luaEnabled;
 
 function AIInit(bot, config) {
 	if (fs.exists(path + "/modules/lua.js")) {
-		lua = require(path + "/modules/lua.js")
+		lua = require(path + "/modules/lua.js");
 		lua.setupLua(bot, config, "ai.js");
 		luaEnabled = true;
 	}
@@ -17,7 +17,7 @@ function AIInit(bot, config) {
 	bot.addListener("message", function(from, to, text, message) {
 		var msgto;
 		if (to != config.nick) msgto=to; else msgto=from;
-		AICall(msgto, text)
+		AICall(msgto, text);
 	});
 }
 
@@ -42,19 +42,19 @@ function AICall(msgto, text) {
 function readAnswers(msgto, filename){
 	var file = fs.readFileSync(path + "/AIAnswers/" + filename);
 	var fileContent = file.split("\n");
-	var answerNumber = Math.floor(Math.random()*(fileContent.length-1)
-	for (var i in fileContent) {
+	var answerNumber = Math.floor(Math.random()*(fileContent.length-1));
+	for(var i in fileContent){
 		if (fileContent[i].IndexOf("$") == 0) {
-			readAnswers(path + "/AIAnswers/" + fileContent[i].substring(1), Math.floor(Math.random()*(fileContent.length-1))
+			readAnswers(path + "/AIAnswers/" + fileContent[i].substring(1), Math.floor(Math.random()*(fileContent.length-1)));
 		}
 		else if (fileContent[i].IndexOf(">") == 0 && luaEnabled) {
-			return lua.runLuaCMD(msgto, "ai.js", fileContent[i].substring(1))
+			return lua.runLuaCMD(msgto, "ai.js", fileContent[i].substring(1));
 		}
 		else if (i == answerNumber) {
 			return fileContent[i].substring(1);
-		}
+		};
 	};
-}
+};
 
 exports.start = start;
 exports.execute = execute;

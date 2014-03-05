@@ -4,10 +4,12 @@
 var lua = [];
 var nodelua;
 var botconf;
+var bot;
 var ret_value, error;
 var err_length;
-function setupLua(bot, config, instanceName) {
+function setupLua(instanceName) {
 	nodelua = require("nodelua");
+	lua[instanceName] = NaN;
 	lua[instanceName] = new nodelua.LuaState(instanceName);
 	lua[instanceName].registerFunction("nativeP", function(to, str){
                 	bot.say(to, "> "  + str);
@@ -47,7 +49,7 @@ function runLuaCMD(to, instanceName, command) {
 	    );
 	} catch (err) {
 		// bot.say(to, "Lua Crashed, making State Reset...");
-		setupLua(bot, botconf, instanceName);
+		setupLua(instanceName);
 	}
 	ret_value;
     var ret_value, error;
@@ -55,7 +57,6 @@ function runLuaCMD(to, instanceName, command) {
         ret_value = lua[instanceName].doStringSync(command);
     } catch (err) {
 		error = err;
-        console.log("Error " + error);
     }
     if (ret_value) {
     	var retstr = "";
@@ -69,20 +70,23 @@ function runLuaCMD(to, instanceName, command) {
     }
 }
 
-function start(from,to,msgto,bot,config,echexecargs) {
+function start(from,to,msgto,botorig,config,echexecargs) {
 	// Nothing
 }
 
-function autoload(bot,config) {
+function autoload(botorig,config) {
+	bot = botorig;
 	console.log("lua.js started automatically");
-	setupLua(bot, config, "lua");
+	setupLua("lua");
 	botconf = config;
 	bot.addListener("message", function(from, to, text, message){
 		if (text.startsWith("->")) {
 			var msgto;
 			if (to != config.nick) msgto=to; else msgto=from;
 			var luaStr = text.substring(2).trim();
-			bot.say(msgto, runLuaCMD(msgto, "lua", luaStr) );
+			var returned = runLuaCMD(msgto, "lua", luaStr);
+			console.log(returned)
+			bot.say(msgto, returned);
 		};
 
 	});

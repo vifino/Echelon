@@ -46,7 +46,7 @@ function loadModules() {
 	modulesloaded = false;
 	currentfilewoext;
 	currentfile;
-	for(var filecount in files){
+	for (var filecount in files){
 	if (!files.hasOwnProperty(filecount)) continue;
 		modulestotal = modulestotal + 1;
 		currentfile = files[filecount];
