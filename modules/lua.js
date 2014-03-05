@@ -1,45 +1,39 @@
 // Lua Module
 // It requires nodelua to be installed, or it will fail.
 
-var lua;
-var printAllowed = true;
+var lua = [];
 var nodelua;
 var botconf;
 var ret_value, error;
 var err_length;
-function setupLua(bot, config) {
+function setupLua(bot, config, instanceName) {
 	nodelua = require("nodelua");
-	lua = new nodelua.LuaState("lua");
-	lua.registerFunction("nativeP", function(to, str){
-				if (printAllowed) {
+	lua[instanceName] = new nodelua.LuaState(instanceName);
+	lua[instanceName].registerFunction("nativeP", function(to, str){
                 	bot.say(to, "> "  + str);
-				}
-				else {
-					printAllowed = true;
-				}
     });
-    lua.registerFunction("sayIRC", function(user, message){
+    lua[instanceName].registerFunction("sayIRC", function(user, message){
                 bot.say(user, message);
     });
-	lua.registerFunction("actionIRC", function(channel, message) {
+	lua[instanceName].registerFunction("actionIRC", function(channel, message) {
 				bot.action(channel, message);
 	});
-	lua.registerFunction("joinIRC", function(channel) {
+	lua[instanceName].registerFunction("joinIRC", function(channel) {
 				bot.join(channel);
 	});
-	lua.registerFunction("partIRC", function(channel) {
+	lua[instanceName].registerFunction("partIRC", function(channel) {
 				bot.part(channel);
 	});
-	lua.registerFunction("resetLua", function() {
+	lua[instanceName].registerFunction("resetLua", function() {
 				printAllowed = false;
 				setupLua(bot, config);
 	});
-	lua.registerFunction("nope", function(to) {
+	lua[instanceName].registerFunction("nope", function(to) {
 				bot.say(to, "Nope!")
 	});
 }
 
-function runLuaCMD(to, bot, command) {
+function runLuaCMD(instanceName, command) {
 	try	{
 		lua.doStringSync(
 	        
@@ -53,22 +47,24 @@ function runLuaCMD(to, bot, command) {
 	    );
 	} catch (err) {
 		// bot.say(to, "Lua Crashed, making State Reset...");
-		setupLua(bot, botconf);
+		setupLua(bot, botconf, instanceName);
 	}
 	ret_value;
     var ret_value, error;
 	try {
-        ret_value = lua.doStringSync(command);
+        ret_value = lua[instanceName].doStringSync(command);
     } catch (err) {
 		error = err;
         console.log("Error " + error);
     }
     if (ret_value) {
+    	var retstr = "";
 		for (i in ret_value) {
-		   bot.say(to, "> " + ret_value[i]);
+		   retstr += ret_value[i] + "\n";
 		}
+		return retstr;
     } else if (error) {
-        bot.say(to, "> "  + error);
+        return error
 
     }
 }
@@ -79,14 +75,14 @@ function start(from,to,msgto,bot,config,echexecargs) {
 
 function autoload(bot,config) {
 	console.log("lua.js started automatically");
-	setupLua(bot, config);
+	setupLua(bot, config, "lua");
 	botconf = config;
 	bot.addListener("message", function(from, to, text, message){
 		if (text.startsWith("->")) {
 			var msgto;
 			if (to != config.nick) msgto=to; else msgto=from;
 			var luaStr = text.substring(2).trim();
-			runLuaCMD(msgto, bot, luaStr);
+			bot.say(msgto, runLuaCMD("lua", luaStr) );
 		};
 
 	});
@@ -102,3 +98,6 @@ function execute() {
 exports.start = start;
 exports.execute = execute;
 exports.autoload = autoload;
+exports.runLuaCMD = runLuaCMD;
+exports.setupLua = setupLua;
+exports.luaInstances = lua;
