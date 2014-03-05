@@ -33,7 +33,7 @@ function setupLua(bot, config, instanceName) {
 	});
 }
 
-function runLuaCMD(instanceName, command) {
+function runLuaCMD(to, instanceName, command) {
 	try	{
 		lua.doStringSync(
 	        
@@ -82,7 +82,7 @@ function autoload(bot,config) {
 			var msgto;
 			if (to != config.nick) msgto=to; else msgto=from;
 			var luaStr = text.substring(2).trim();
-			bot.say(msgto, runLuaCMD("lua", luaStr) );
+			bot.say(msgto, runLuaCMD(msgto, "lua", luaStr) );
 		};
 
 	});

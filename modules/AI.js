@@ -35,10 +35,11 @@ function execute() {
 	// Nothing
 }
 function AICall(msgto, text) {
-
+	// todo...
+	// readAnswers(msgto, answerFile)
 }
 
-function readAnswers(filename){
+function readAnswers(msgto, filename){
 	var file = fs.readFileSync(path + "/AIAnswers/" + filename);
 	var fileContent = file.split("\n");
 	var answerNumber = Math.floor(Math.random()*(fileContent.length-1)
@@ -47,7 +48,7 @@ function readAnswers(filename){
 			readAnswers(path + "/AIAnswers/" + fileContent[i].substring(1), Math.floor(Math.random()*(fileContent.length-1))
 		}
 		else if (fileContent[i].IndexOf(">") == 0 && luaEnabled) {
-			return lua.runLuaCMD("ai.js", fileContent[i].substring(1))
+			return lua.runLuaCMD(msgto, "ai.js", fileContent[i].substring(1))
 		}
 		else if (i == answerNumber) {
 			return fileContent[i].substring(1);
