@@ -5,9 +5,16 @@
 var irc = require("irc");
 var fs = require("fs");
 var _ = require("underscore");
-var config = require("./config");
+var path = require("path");
+var config = require(path.resolve(__dirname, "config.js"));
+var moduledir = path.resolve(__dirname, "modules/")
+var moduleBlacklist;
+var moduleBlacklistPath = path.resolve(__dirname, "moduleBlacklist.txt");
+var moduleOrder;
+var moduleOrderPath = path.resolve(__dirname, "moduleOrder.txt");
 var modules = [];
 var modulestotal = 0;
+var moduleNamesOrdered;
 var currentfile;
 var currentmodule;
 var modulesloaded = false;
@@ -16,6 +23,7 @@ var currentmoduleauto;
 var files;
 var bot;
 var msgto;
+var moduleBlacklistCount = 0;
 function spawnBot() {
 	bot = new irc.Client(config.server, config.nick, {
 		channels: config.channel,
@@ -31,14 +39,21 @@ function spawnBot() {
 };
 var modulestarted = [];
 	// Some First-Run Configuration
-	if (!fs.existsSync("./modules")) {
-		fs.mkdirSync("./modules");
+	if (!fs.existsSync(moduledir)) {
+		fs.mkdirSync(moduledir);
+	if (!fs.existsSync(moduleBlacklistPath)) {
+		fs.writeFileSync(moduleBlacklistPath, "")
+	}
 }
 // Load Additional Modules.
 function loadModules() {
 	console.log("Searching and loading Modules.");
 	files = [];
-	files = fs.readdirSync("./modules");
+	console.log(moduledir);
+	console.log(moduleOrderPath);
+	files = fs.readdirSync(moduledir);
+	moduleBlacklist = fs.readFileSync(moduleBlacklistPath);
+	moduleOrder = fs.readFileSync(moduleOrderPath);
 	modules = [];
 	modulenames = [];
 	currentmodule;
@@ -46,32 +61,53 @@ function loadModules() {
 	modulesloaded = false;
 	currentfilewoext;
 	currentfile;
-	for (var filecount in files){
-	if (!files.hasOwnProperty(filecount)) continue;
-		modulestotal = modulestotal + 1;
-		currentfile = files[filecount];
-		currentfilewoext = currentfile.slice(0,-3);
-		modules[currentfilewoext] = require("./modules/" + files[filecount]);
-		modulenames.push(currentfilewoext);
-		currentmodule = modules[currentfilewoext];
-		currentmoduleauto = currentmodule["autoload"];
-		// console.log(currentmodule);
-		// console.log(currentmoduleauto);
-		// console.log(_.isFunction(currentmoduleauto));
-		// console.log(typeof(currentmoduleauto));
-		console.log("Loaded ", currentfilewoext);
-		if ( _.isFunction(currentmoduleauto) ) {  //_.isFunction(modules[currentfilewoext].autoload)
-			currentmoduleauto(bot, config);
-			console.log("Autorun executed in Module "+currentfilewoext);
-			modulestarted[currentfilewoext] = true;
+	var doneSorting = false;
+	if (!fs.existsSync(moduleOrderPath)) {
+		var orderString = "";
+		for (var i in files) {
+			orderString = orderString + files[i] + "\n";
 		}
-		else {
-			console.log("Did not autorun Module "+currentfilewoext+". (It is not type 'function')");
-			modulestarted[currentfilewoext] = false;
-		};
-		modulesloaded = true;
+		fs.writeFileSync(moduleOrderPath, orderString)
+	}
+	for (var filecount in files) {
+		for (var i in moduleOrder) {
+			if (moduleOrder[i] == files[filecount]) {
+				moduleNamesOrdered.push(files[filecount])
+			}
+		}
+	}
+	for (var i in moduleNamesOrdered){
+		modulestotal = modulestotal + 1;
+		currentfile = moduleNamesOrdered[i];
+		currentfilewoext = currentfile.slice(0,-3);
+		var moduleBlacklistCurrent;
+		if (!files.hasOwnProperty(filecount)) continue;
+		for (var itemBlacklist in moduleBlacklist) {
+			if (moduleBlacklist[itemblacklist] == currentfile) {
+				moduleBlacklistCurrent == true;					moduleBlacklistCount == moduleBlacklistCount + 1;
+			}
+		}
+		if (!moduleBlacklistCurrent) {
+			modules[currentfilewoext] = require(moduledir + moduleNamesOrdered[i]);
+			modulenames.push(currentfilewoext);
+			currentmodule = modules[currentfilewoext];
+			currentmoduleauto = currentmodule["autoload"];
+			console.log("Loaded ", currentfilewoext);
+			if ( _.isFunction(currentmoduleauto) ) {  //_.isFunction(modules[currentfilewoext].autoload)
+				currentmoduleauto(bot, config);
+				console.log("Autorun executed in Module " + currentfilewoext);
+				modulestarted[currentfilewoext] = true;
+			}
+			else {
+				console.log("Did not autorun Module "+currentfilewoext+". (It is not type 'function')");
+				modulestarted[currentfilewoext] = false;
+			};
+		}
+		
 	};	
+	modulesloaded = true;
 	console.log("Finished Loading Modules.");
+	console.log("Loaded " + modulestotal + " Modules.");
 };
 // Finished Loading of modules.
 
