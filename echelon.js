@@ -14,7 +14,7 @@ var moduleOrder;
 var moduleOrderPath = path.resolve(__dirname, "moduleOrder.txt");
 var modules = [];
 var modulestotal = 0;
-var moduleNamesOrdered;
+var moduleNamesOrdered = [];
 var currentfile;
 var currentmodule;
 var modulesloaded = false;
@@ -49,11 +49,7 @@ var modulestarted = [];
 function loadModules() {
 	console.log("Searching and loading Modules.");
 	files = [];
-	console.log(moduledir);
-	console.log(moduleOrderPath);
 	files = fs.readdirSync(moduledir);
-	moduleBlacklist = fs.readFileSync(moduleBlacklistPath);
-	moduleOrder = fs.readFileSync(moduleOrderPath);
 	modules = [];
 	modulenames = [];
 	currentmodule;
@@ -69,6 +65,8 @@ function loadModules() {
 		}
 		fs.writeFileSync(moduleOrderPath, orderString)
 	}
+	moduleBlacklist = fs.readFileSync(moduleBlacklistPath).toString().split("\n");
+	moduleOrder = fs.readFileSync(moduleOrderPath).toString().split("\n");
 	for (var filecount in files) {
 		for (var i in moduleOrder) {
 			if (moduleOrder[i] == files[filecount]) {
@@ -83,12 +81,12 @@ function loadModules() {
 		var moduleBlacklistCurrent;
 		if (!files.hasOwnProperty(filecount)) continue;
 		for (var itemBlacklist in moduleBlacklist) {
-			if (moduleBlacklist[itemblacklist] == currentfile) {
+			if (moduleBlacklist[itemBlacklist] == currentfile) {
 				moduleBlacklistCurrent == true;					moduleBlacklistCount == moduleBlacklistCount + 1;
 			}
 		}
 		if (!moduleBlacklistCurrent) {
-			modules[currentfilewoext] = require(moduledir + moduleNamesOrdered[i]);
+			modules[currentfilewoext] = require(path.resolve(moduledir,moduleNamesOrdered[i]));
 			modulenames.push(currentfilewoext);
 			currentmodule = modules[currentfilewoext];
 			currentmoduleauto = currentmodule["autoload"];
